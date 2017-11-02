@@ -1,0 +1,4 @@
+certifi==2017.7.27.1
+Django==1.11.7
+pytz==2017.3
+virtualenv==15.1.0
