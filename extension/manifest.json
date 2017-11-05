@@ -1,11 +1,10 @@
 {
-  "name": "CHANGE THIS : Extension boilerplate",
+  "name": "BubblePop",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "This extension was created with the awesome extensionizr.com",
-  "homepage_url": "http://extensionizr.com",
+  "description": "An Interface to Reduce Media Bias in Facebook",
+  "homepage_url": "https://github.com/todoaskit/BubblePop",
   "icons": {
-    "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
@@ -25,7 +24,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.google.com/*"
+        "https://www.facebook.com/*"
       ],
       "css": [
         "src/inject/inject.css"
@@ -33,7 +32,7 @@
     },
     {
       "matches": [
-        "https://www.google.com/*"
+        "https://www.facebook.com/*"
       ],
       "js": [
         "src/inject/inject.js"
