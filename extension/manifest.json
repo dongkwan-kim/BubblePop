@@ -27,6 +27,7 @@
         "https://www.facebook.com/*"
       ],
       "css": [
+        "src/inject/modal.css",
         "src/inject/inject.css"
       ]
     },
@@ -35,6 +36,7 @@
         "https://www.facebook.com/*"
       ],
       "js": [
+        "src/inject/modal.js",
         "src/inject/inject.js"
       ]
     }
