@@ -3,13 +3,9 @@ from newspaper import Article
 
 def get_URLs(rss_link):
     parsed = feedparser.parse(rss_link)
-    #print(parsed.feed.links)
     links = []
     for entry in parsed.entries:
         links.append(entry.link)
-    #file = open("test.txt","w")
-    #file.write(parsed)
-    #file.close()
 
     return links
 
@@ -36,6 +32,7 @@ def test():
     file.flush()
     file.close()
 
-test()
+if __name__ == "__main__":
+    test()
 
 
