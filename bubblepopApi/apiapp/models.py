@@ -5,6 +5,7 @@ from django.db import models
 class Media(models.Model):
     name = models.CharField(max_length=10, verbose_name='이름')
     rss_list = models.TextField(verbose_name='RSS 리스트')
+    political_view = models.FloatField(verbose_name='성향')
     icon = models.URLField(verbose_name='아이콘')
 
     def __str__(self):
@@ -25,20 +26,12 @@ class Article(models.Model):
     media = models.ForeignKey(Media, verbose_name='신문사')
     writer = models.CharField(max_length=10, verbose_name='작성자')
     published_at = models.DateField(verbose_name='발행일')
-    article_rss = models.URLField(verbose_name='RSS 링크')
     article_url = models.URLField(verbose_name='URL 링크')
     category = models.CharField(max_length=10, verbose_name='분류')
-
-    def __str__(self):
-        return str(self.media) + '-' + self.title
-
-
-class CachedArticle(models.Model):
-    article = models.ForeignKey(Article, verbose_name='기사')
     cluster = models.ForeignKey(Cluster, verbose_name='클러스터')
 
     def __str__(self):
-        return str(self.cluster) + '-' + str(self.article)
+        return str(self.media) + '-' + self.title
 
 
 class Related(models.Model):
@@ -83,4 +76,10 @@ class Report(models.Model):
 
     def __str__(self):
         return str(self.user) + '-' + str(self.id)
+
+
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, verbose_name='사용자')
+    shown_news = models.IntegerField(default=0, verbose_name='뉴스피드 등장한 뉴스')
+    clicked_news = models.IntegerField(default=0, verbose_name='클릭한 뉴스')
 
