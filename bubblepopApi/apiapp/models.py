@@ -5,6 +5,7 @@ from django.db import models
 class Media(models.Model):
     name = models.CharField(max_length=10, verbose_name='이름')
     rss_list = models.TextField(verbose_name='RSS 리스트')
+    political_view = models.FloatField(verbose_name='성향')
     icon = models.URLField(verbose_name='아이콘')
 
     def __str__(self):

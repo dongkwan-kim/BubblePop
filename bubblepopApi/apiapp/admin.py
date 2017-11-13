@@ -5,7 +5,7 @@ from apiapp.models import Media, Cluster, Article, \
 
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
-    list_display = ('name', 'rss_list', 'icon')
+    list_display = ('name', 'rss_list', 'political_view', 'icon')
 
 
 @admin.register(Cluster)
