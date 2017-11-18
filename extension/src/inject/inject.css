@@ -17,6 +17,6 @@
 }
 
 .embedded-article {
-    margin: auto;
+    margin: 0 auto 10px auto;
     max-width: 474px!important;
 }
