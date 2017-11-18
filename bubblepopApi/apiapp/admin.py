@@ -1,11 +1,11 @@
 from django.contrib import admin
 from apiapp.models import Media, Cluster, Article, \
-        CachedArticle, Related, UserBlackList, Report
+        Related, UserBlackList, Report, UserProfile
 
 
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
-    list_display = ('name', 'rss_list', 'icon')
+    list_display = ('name', 'rss_list', 'political_view', 'icon')
 
 
 @admin.register(Cluster)
@@ -17,12 +17,6 @@ class ClusterAdmin(admin.ModelAdmin):
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'content', 'media', 'article_url')
     list_filter = ('media',)
-
-
-@admin.register(CachedArticle)
-class CachedArticleAdmin(admin.ModelAdmin):
-    list_display = ('article', 'cluster')
-    list_filter = ('cluster',)
 
 
 @admin.register(Related)
@@ -40,4 +34,9 @@ class UserBlackListAdmin(admin.ModelAdmin):
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('user', 'article_a', 'article_b', 'content')
     list_filter = ('user',)
+
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'shown_news', 'clicked_news')
 
