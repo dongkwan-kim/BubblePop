@@ -1,6 +1,6 @@
 from django.contrib import admin
 from apiapp.models import Media, Cluster, Article, \
-        CachedArticle, Related, UserBlackList, Report
+        Related, UserBlackList, Report, UserProfile
 
 
 @admin.register(Media)
@@ -19,12 +19,6 @@ class ArticleAdmin(admin.ModelAdmin):
     list_filter = ('media',)
 
 
-@admin.register(CachedArticle)
-class CachedArticleAdmin(admin.ModelAdmin):
-    list_display = ('article', 'cluster')
-    list_filter = ('cluster',)
-
-
 @admin.register(Related)
 class RelatedAdmin(admin.ModelAdmin):
     list_display = ('article_a', 'article_b', 'similarity', 'reports')
@@ -40,4 +34,9 @@ class UserBlackListAdmin(admin.ModelAdmin):
 class ReportAdmin(admin.ModelAdmin):
     list_display = ('user', 'article_a', 'article_b', 'content')
     list_filter = ('user',)
+
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'shown_news', 'clicked_news')
 
