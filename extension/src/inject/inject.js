@@ -190,12 +190,18 @@ function testUpdateAffinityGraph() {
 function modalHandler(ssdvModal, link) {
     var c = ssdvModal.child;
     var modalHeader = c.getElementsByClassName("modal-header")[0];
+    modalHeader.innerHTML = '다른 시각의 뉴스';
+
     var modalBody = c.getElementsByClassName("modal-body")[0];
+    // TODO Replace below to fetchSSDVLink: callback or promise.
     var ea = testEmbeddedArticle();
     modalBody.innerHTML = ea;
-    modalHeader.innerHTML = '다른 시각의 뉴스';
     ssdvModal.show();
     testUpdateAffinityGraph();
+}
+
+function fetchSSDVLink(link) {
+    // TODO
 }
 
 function embeddedArticle(url, thumbnail, title, description, media) {
