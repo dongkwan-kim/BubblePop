@@ -28,7 +28,8 @@
       ],
       "css": [
         "src/inject/modal.css",
-        "src/inject/inject.css"
+        "src/inject/inject.css",
+        "src/inject/billboard.min.css"
       ]
     },
     {
@@ -37,7 +38,10 @@
       ],
       "js": [
         "src/inject/modal.js",
-        "src/inject/inject.js"
+        "src/inject/inject.js",
+        "src/inject/d3.v4.min.js",
+        "src/inject/billboard.min.js",
+        "src/inject/rainbowvis.js"
       ]
     }
   ]

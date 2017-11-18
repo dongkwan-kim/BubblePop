@@ -56,7 +56,7 @@ function appendSSDVBtn(linkDOM, link, ssdvModal) {
     var node = document.createElement("DIV");
     node.classList.add("request-ssdv-btn");
     node.setAttribute("data", link);
-    node.addEventListener("click", () => {modalHandler(ssdvModal);});
+    node.addEventListener("click", () => {modalHandler(ssdvModal, link);});
 
     var textnode = document.createTextNode("+");
     node.appendChild(textnode);
@@ -114,14 +114,80 @@ function createModalWindow(modalId) {
     header.className = "modal-header";
     child.appendChild(header);
 
+    var graph = document.createElement('div');
+    graph.className = 'modal-graph';
+    child.appendChild(graph);
+
     var body = document.createElement("div");
     body.className = "modal-body";
+    body.style.height = window.outerHeight * 0.5 + 'px';
     child.appendChild(body);
 
     return new Modal(child, false);
 }
 
-function modalHandler(ssdvModal) {
+function updateAffinityGraph(graphSelector, newsNumberList, categories) {
+    if (categories.length != newsNumberList.length) {
+        console.log("catetories and newsNumberList are not matched.");
+        return false;
+    }
+    newsNumberList.unshift('#기사');
+    colorList = getColorGradientList(categories.length, 'red', 'blue');
+    bb.generate({
+        bindto: graphSelector,
+        size: {
+            height: 70
+        },
+        axis: {
+            "x": {
+                "type": "category",
+                "categories": categories
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: false,
+        },
+        data: {
+            columns: [
+                newsNumberList,
+            ],
+            types: {
+                '#기사': "bar",
+            },
+            color: function (color, d) {
+                if (Number.isInteger(d.index)){
+                    return colorList[d.index];
+                } else{
+                    return "white"
+                }
+            }
+        },
+    });
+}
+
+function getColorGradientList(numberOfItems, start, end) {
+    var rainbow = new Rainbow();
+    rainbow.setNumberRange(1, numberOfItems);
+    rainbow.setSpectrum(start, end);
+    var r = [];
+    for (var i = 1; i <= numberOfItems; i++) {
+        var hexColour = rainbow.colourAt(i);
+        r.push('#' + hexColour);
+    }
+    return r;
+}
+
+function testUpdateAffinityGraph() {
+    updateAffinityGraph('.modal-graph',
+        [3, 2, 3, 1, 1, 2, 1, 2, 2, 1, 1, 1, 2],
+        ["조선", "중앙", "동아", "매경", "한경", "한겨레", "경향",
+            "오마이", "한국", "세계", "국민", "헤럴드", "노컷"]);
+}
+
+function modalHandler(ssdvModal, link) {
     var c = ssdvModal.child;
     var modalHeader = c.getElementsByClassName("modal-header")[0];
     var modalBody = c.getElementsByClassName("modal-body")[0];
@@ -129,6 +195,7 @@ function modalHandler(ssdvModal) {
     modalBody.innerHTML = ea;
     modalHeader.innerHTML = '다른 시각의 뉴스';
     ssdvModal.show();
+    testUpdateAffinityGraph();
 }
 
 function embeddedArticle(url, thumbnail, title, description, media) {
