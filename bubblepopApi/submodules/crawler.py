@@ -2,15 +2,16 @@ import feedparser
 import time
 from newspaper import Article
 from konlpy.tag import Hannanum
-from konlpy.tag import Mecab
-from apiapp.models import Article, Media
+#from konlpy.tag import Mecab
+#from apiapp.models import Article, Media
+from url_strip import url_strip
 
 
 def get_URLs(rss_link):
     parsed = feedparser.parse(rss_link)
     links = []
     for entry in parsed.entries:
-        links.append(entry.link)
+        links.append(url_strip(entry.link))
     return links
 
 def get_article(url):
