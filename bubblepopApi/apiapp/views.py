@@ -15,17 +15,6 @@ def check_url(request):
     url = url_strip(url)
     # check url
 
-    """
-    try:
-        Article.object.get(article_url = url)
-
-    except DoesNotExist:
-
-        return JsonResponse({'url':url,'result':False})
-    except MultipleObjectsReturned:
-        print("More than 2 articles in same url.")
-        return JsonResponse({'url':url,'result':True})
-    """
 
     return JsonResponse({'url':url,
         'result':Article.objects.filter(article_url = url).exists()})
@@ -81,15 +70,14 @@ def report(request):
         raise SuspiciousOperation
     url1 = request.GET['url_a']
     url2 = request.GET['url_b']
+    content = request.GET['content']
     user = request.user
     article1 = Article.objects.get(article_url = url1)
     article2 = Article.objects.get(article_url = url2)
-    if (url1 <= url2):
-        Report.objects.create(user=user,article_a=article1, \
-                article_b=article2,content=' ')
-    else:
-        Report.objects.create(user=user,article_a=article2,\
-                article_b=article1,content=' ')
+    if (url2 < url1):
+        article1,article2 = article2, article1
+    Report.objects.create(user=user,article_a=article1, \
+                article_b=article2,content=content)
     return JsonResponse({'url_a':url1,'url_b':url2,'result':True})
 
 
