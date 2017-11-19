@@ -19,4 +19,9 @@ from apiapp import views as view
 
 urlpatterns = [
     url(r'^test', view.test),
+    url(r'^check', view.check_url),
+    url(r'^articles', view.find_articles),
+    url(r'^blacklist', view.blacklist),
+    url(r'^change', view.change_blacklist),
+    url(r'^report', view.report),
 ]

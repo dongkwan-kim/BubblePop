@@ -59,6 +59,9 @@ class UserBlackList(models.Model):
     def __str__(self):
         return str(self.user) + '-' + str(self.media)
 
+    def get_media(self):
+        return str(self.media)
+
 
 class Report(models.Model):
     article_a = models.ForeignKey(
