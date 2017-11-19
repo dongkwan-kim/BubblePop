@@ -52,7 +52,7 @@ def blacklist(request):
         return HttpResponse("Unauthenticated", status=401)
     black_list = UserBlackList.objects.filter(user=user)
     return JsonResponse({
-        "result": list(black_list)
+        "result": [n.get_media() for n in list(black_list)]
     })
 
 
