@@ -1,5 +1,6 @@
 from sim_metrics import *
 from sklearn.cluster import AgglomerativeClustering
+from sklearn.cluster import KMeans
 
 
 def hac_cosine_cluster(all_documents, num_cluster=15):
@@ -20,6 +21,23 @@ def hac_cosine_cluster(all_documents, num_cluster=15):
 
     cluster_dict = {}
     for idx, label in enumerate(hac.labels_):
+        if label not in cluster_dict.keys():
+            cluster_dict[label] = [idx]
+        else:
+            cluster_dict[label].append(idx)
+
+    return cluster_dict
+
+
+def kmeans_cluster(all_documents, num_cluster=15):
+    tfidf = TfidfVectorizer(norm='l2', min_df=0, use_idf=True, smooth_idf=False,
+                            sublinear_tf=True, tokenizer=lambda doc: doc.split(' '))
+    X = tfidf.fit_transform(all_documents)
+    km = KMeans(n_clusters=num_cluster, init='k-means++', max_iter=100, n_init=1)
+    km.fit(X.toarray())
+
+    cluster_dict = {}
+    for idx, label in enumerate(km.labels_):
         if label not in cluster_dict.keys():
             cluster_dict[label] = [idx]
         else:
