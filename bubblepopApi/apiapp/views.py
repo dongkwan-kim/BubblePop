@@ -110,6 +110,6 @@ def report(request):
     })
 
 def force_crawl(request):
-    crawl()
-    return JsonResponse({'result':True})
+    count,all = crawl()
+    return JsonResponse({'crawl':count,'all':all})
 

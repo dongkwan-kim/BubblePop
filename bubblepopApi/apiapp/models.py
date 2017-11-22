@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-
 class Media(models.Model):
     name = models.CharField(max_length=10, verbose_name='이름')
     rss_list = models.TextField(verbose_name='RSS 리스트')
@@ -25,10 +24,13 @@ class Article(models.Model):
     morphemed_content = models.TextField(verbose_name='형태소 본문')
     media = models.ForeignKey(Media, verbose_name='신문사')
     writer = models.CharField(max_length=10, verbose_name='작성자')
-    published_at = models.DateField(verbose_name='발행일')
+    published_at = models.DateField(
+            auto_now_add=True,
+            verbose_name='발행일'
+            )
     article_url = models.URLField(verbose_name='URL 링크')
-    category = models.CharField(max_length=10, verbose_name='분류')
-    cluster = models.ForeignKey(Cluster, verbose_name='클러스터')
+    category = models.CharField(max_length=10, default='정치', verbose_name='분류')
+    cluster = models.ForeignKey(Cluster, null=True, verbose_name='클러스터')
 
     def __str__(self):
         return str(self.media) + '-' + self.title
