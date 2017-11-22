@@ -1,6 +1,7 @@
 from collections import Counter
 import re
 
+import numpy as np
 from konlpy.tag import Hannanum
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -36,7 +37,7 @@ def normalize(doc, as_list=False):
 
 def cosine_sim(all_documents):
     """
-    Computes the cosine similarity of some documents.
+    Computes the cosine similarities of some documents.
 
     :param all_documents: List of documents which are in string format.
     :return: Matrix of cosine similarities of each pair of documents.
@@ -46,27 +47,32 @@ def cosine_sim(all_documents):
     return cosine_similarity(tfidf.fit_transform(all_documents))
 
 
-def jaccard(doc1, doc2, domain_size=20):
+def jaccard_sim(all_documents, domain_size=30):
     """
-    Computes the Jaccard coefficient of two documents. The number of words which are subject to the calculation is
-    determined by cutting 'domain_size' number of words from most-used one to the least-used.
+    Computes the Jaccard similarities of some documents.
 
-    :param doc1: Whole paragraph of the first document as str type.
-    :param doc2: Whole paragraph of the second document as str type.
+    :param all_documents: List of documents which are in string format.
     :param domain_size: Number of words which are subject to the evaluation in each document.
-    :return: list(Jaccard coefficient, union of morphemes of two documents).
+    :return: Matrix of Jaccard similarities of each pair of documents.
     """
-    result = []
-    counter1 = Counter(normalize(doc1, as_list=True))
-    counter2 = Counter(normalize(doc2, as_list=True))
-    words1 = set()
-    words2 = set()
-    for elem in counter1.most_common(domain_size):
-        words1.add(elem[0])
-    for elem in counter2.most_common(domain_size):
-        words2.add(elem[0])
-    union = words1.union(words2)
-    intersection = words1.intersection(words2)
-    result.append(len(intersection) / len(union))
-    result.append(union)
+    list_of_wordset = []
+    for idx in range(len(all_documents)):
+        counter = Counter(all_documents[idx].split(' '))
+        words = set()
+        for elem in counter.most_common(domain_size):
+            words.add(elem[0])
+        list_of_wordset.append(words)
+
+    result = np.ones((len(all_documents), len(all_documents)))
+    for i in range(len(all_documents)):
+        words1 = list_of_wordset[i]
+        for j in range(i + 1, len(all_documents)):
+            words2 = list_of_wordset[j]
+            union = words1.union(words2)
+            intersection = words1.intersection(words2)
+            if len(union) == 0:
+                result[i][j] = 1
+            jaccard_val = len(intersection) / len(union)
+            result[i][j] = jaccard_val
+            result[j][i] = jaccard_val
     return result
