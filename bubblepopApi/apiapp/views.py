@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from submodules.url_strip import url_strip
+from submodules.crawler import crawl
 from apiapp.models import Article, UserProfile, UserBlackList, Report, Media
 
 
@@ -107,4 +108,8 @@ def report(request):
         'url_b': url2,
         'result': True,
     })
+
+def force_crawl(request):
+    count,all = crawl()
+    return JsonResponse({'crawl':count,'all':all})
 
