@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head lang="ko">
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+</head>
+<style type="text/css">
+
+.header {
+    margin-bottom: 20px;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.main {
+    padding: 10px;
+    width: 350px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+    background-color: #4267b2;
+    cursor: pointer;
+}
+
+.list-body {
+    margin-bottom: 55px;
+}
+
+</style>
+
+<script src="page_action.js"></script>
+
+<body>
+    <div class="main">
+        <div class="list-body">
+            <h5 class="header">구독 리스트</h5>
+            <ul id="media-collection" class="collection"></ul>
+        </div>
+        <div id="update-btn" class="footer">
+            <h5>업데이트 하기</h5>
+        </div>
+    </div>
+</body>
+
+</html>
