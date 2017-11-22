@@ -1,45 +1,68 @@
-{
-    "news_media":
-    [
-        "조선일보":{
-            "rss":"http://www.chosun.com/site/data/rss/politics.xml",   
-        },
-        "중앙일보":{
-            "rss":"http://rss.joins.com/joins_politics_list.xml",   
-        },
-        "동아일보":{
-            "rss":"http://rss.donga.com/politics.xml",   
-        },
-        "매일경제":{
-            "rss":"http://file.mk.co.kr/news/rss/rss_30200030.xml",   
-        },
-        "한국경제":{
-            "rss":"http://rss.hankyung.com/new/news_politics.xml",   
-        },
-        "한겨레신문":{
-            "rss":"http://www.hani.co.kr/rss/politics/",   
-        },
-        "경향신문":{
-            "rss":"http://www.khan.co.kr/rss/rssdata/politic_news.xml",   
-        },
-        "오마이뉴스":{
-            "rss":"http://rss.ohmynews.com/rss/politics.xml",   
-        },
-        "한국일보":{
-            "rss":"http://rss.hankooki.com/daily/dh_politics.xml",   
-        },
-        "세계일보":{
-            "rss":"http://rss.segye.com/segye_politic.xml",   
-        },
-        "국민일보":{
-            "rss":"http://rss.kmib.co.kr/data/kmibPolRss.xml",   
-        },
-        "헤럴드경제":{
-            "rss":"http://biz.heraldm.com/rss/010108000000.xml",   
-        },
-        "노컷뉴스":{
-            "rss":"http://rss.nocutnews.co.kr/NocutPolitics.xml",   
-        },
-    ],
-}
-
+[ 
+    { 
+        "name": "조선일보", 
+        "affinity": , 
+        "rss":"http://www.chosun.com/site/data/rss/politics.xml",   
+        "icon": ""
+    }, 
+    { 
+        "name": "중앙일보", 
+        "affinity": , 
+        "rss": "http://rss.joins.com/joins_politics_list.xml", 
+        "icon": "" 
+    }, 
+    { 
+        "name": "동아일보", 
+        "affinity": , 
+        "rss": "http://rss.donga.com/politics.xml", 
+        "icon": "" 
+    }, 
+    { 
+        "name": "매일경제", 
+        "affinity": , 
+        "rss": "http://file.mk.co.kr/news/rss/rss_30200030.xml", 
+        "icon": "" 
+    }, 
+    { 
+        "name": "한국경제", 
+        "affinity": , 
+        "rss": "http://rss.hankyung.com/new/news_politics.xml", 
+        "icon": "" 
+    }, 
+    { 
+        "name": "한겨레신문", 
+        "affinity": , 
+        "rss": "http://www.hani.co.kr/rss/politics/", 
+        "icon": "" 
+    }, 
+    { 
+        "name": "경향신문", 
+        "affinity": , 
+        "rss": "http://www.khan.co.kr/rss/rssdata/politic_news.xml", 
+        "icon": "" 
+    }, 
+    { 
+        "name": "오마이뉴스", 
+        "affinity": , 
+        "rss": "http://rss.ohmynews.com/rss/politics.xml", 
+        "icon": "" 
+    }, 
+    { 
+        "name": "한국일보", 
+        "affinity": , 
+        "rss": "http://rss.hankooki.com/daily/dh_politics.xml", 
+        "icon": "" 
+    }, 
+    { 
+        "name": "세계일보", 
+        "affinity": , 
+        "rss": "http://rss.segye.com/segye_politic.xml", 
+        "icon": "" 
+    }, 
+    { 
+        "name": "국민일보", 
+        "affinity": , 
+        "rss": "http://rss.kmib.co.kr/data/kmibPolRss.xml", 
+        "icon": "" 
+    }
+]
