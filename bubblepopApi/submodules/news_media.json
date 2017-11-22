@@ -1,6 +1,6 @@
 {
     "news_media":
-    [
+    {
         "조선일보":{
             "rss":"http://www.chosun.com/site/data/rss/politics.xml",   
         },
@@ -40,6 +40,6 @@
         "노컷뉴스":{
             "rss":"http://rss.nocutnews.co.kr/NocutPolitics.xml",   
         },
-    ],
+    },
 }
 
