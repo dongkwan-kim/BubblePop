@@ -24,11 +24,11 @@ class Article(models.Model):
     content = models.TextField(verbose_name='본문')
     morphemed_content = models.TextField(verbose_name='형태소 본문')
     media = models.ForeignKey(Media, verbose_name='신문사')
-    writer = models.CharField(max_length=10, verbose_name='작성자')
+    writer = models.CharField(max_length=10, verbose_name='작성자', null=True)
     published_at = models.DateField(verbose_name='발행일')
     article_url = models.URLField(verbose_name='URL 링크', unique=True)
-    category = models.CharField(max_length=10, verbose_name='분류')
-    cluster = models.ForeignKey(Cluster, verbose_name='클러스터')
+    category = models.CharField(max_length=10, verbose_name='분류', null=True)
+    cluster = models.ForeignKey(Cluster, verbose_name='클러스터', null=True)
 
     def __str__(self):
         return str(self.media) + '-' + self.title
@@ -56,8 +56,8 @@ class Report(models.Model):
         related_name='reported_article_b',
         verbose_name='기사B'
     )
-    user = models.ForeignKey(User, verbose_name='사용자')
-    content = models.TextField(verbose_name='제보내용')
+    user = models.ForeignKey(User, verbose_name='사용자', null=True)
+    content = models.TextField(verbose_name='제보내용', null=True)
 
     def __str__(self):
         return str(self.user) + '-' + str(self.id)
