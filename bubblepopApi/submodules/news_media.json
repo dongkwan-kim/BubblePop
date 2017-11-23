@@ -3,66 +3,66 @@
         "name": "조선일보", 
         "affinity": , 
         "rss":"http://www.chosun.com/site/data/rss/politics.xml",   
-        "icon": ""
+        "icon": "resouces/icon/조선일보.jpg"
     }, 
     { 
         "name": "중앙일보", 
         "affinity": , 
         "rss": "http://rss.joins.com/joins_politics_list.xml", 
-        "icon": "" 
+        "icon": "resouces/icon/중앙일보.jpg" 
     }, 
     { 
         "name": "동아일보", 
         "affinity": , 
         "rss": "http://rss.donga.com/politics.xml", 
-        "icon": "" 
+        "icon": "resouces/icon/동아일보.jpg" 
     }, 
     { 
         "name": "매일경제", 
         "affinity": , 
         "rss": "http://file.mk.co.kr/news/rss/rss_30200030.xml", 
-        "icon": "" 
+        "icon": "resouces/icon/매일경제.jpg" 
     }, 
     { 
         "name": "한국경제", 
         "affinity": , 
         "rss": "http://rss.hankyung.com/new/news_politics.xml", 
-        "icon": "" 
+        "icon": "resouces/icon/한국경제.png" 
     }, 
     { 
         "name": "한겨레신문", 
         "affinity": , 
         "rss": "http://www.hani.co.kr/rss/politics/", 
-        "icon": "" 
+        "icon": "resouces/icon/한겨레신문.jpg" 
     }, 
     { 
         "name": "경향신문", 
         "affinity": , 
         "rss": "http://www.khan.co.kr/rss/rssdata/politic_news.xml", 
-        "icon": "" 
+        "icon": "resouces/icon/경향신문.png" 
     }, 
     { 
         "name": "오마이뉴스", 
         "affinity": , 
         "rss": "http://rss.ohmynews.com/rss/politics.xml", 
-        "icon": "" 
+        "icon": "resouces/icon/오마이뉴스.png" 
     }, 
     { 
         "name": "한국일보", 
         "affinity": , 
         "rss": "http://rss.hankooki.com/daily/dh_politics.xml", 
-        "icon": "" 
+        "icon": "resouces/icon/한국일보.jpg" 
     }, 
     { 
         "name": "세계일보", 
         "affinity": , 
         "rss": "http://rss.segye.com/segye_politic.xml", 
-        "icon": "" 
+        "icon": "resouces/icon/세계일보.jpg" 
     }, 
     { 
         "name": "국민일보", 
         "affinity": , 
         "rss": "http://rss.kmib.co.kr/data/kmibPolRss.xml", 
-        "icon": "" 
+        "icon": "resouces/icon/국민일보.jpg" 
     }
 ]
