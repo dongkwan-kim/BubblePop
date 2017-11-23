@@ -26,7 +26,7 @@ class Article(models.Model):
     media = models.ForeignKey(Media, verbose_name='신문사')
     writer = models.CharField(max_length=10, verbose_name='작성자')
     published_at = models.DateField(verbose_name='발행일')
-    article_url = models.URLField(verbose_name='URL 링크')
+    article_url = models.URLField(verbose_name='URL 링크', unique=True)
     category = models.CharField(max_length=10, verbose_name='분류')
     cluster = models.ForeignKey(Cluster, verbose_name='클러스터')
 
