@@ -34,24 +34,6 @@ class Article(models.Model):
         return str(self.media) + '-' + self.title
 
 
-class Related(models.Model):
-    similarity = models.FloatField(verbose_name='유사도')
-    article_a = models.ForeignKey(
-        Article,
-        related_name='related_article_a',
-        verbose_name='기사A'
-    )
-    article_b = models.ForeignKey(
-        Article,
-        related_name='related_article_b',
-        verbose_name='기사B'
-    )
-    reports = models.IntegerField(default=0, verbose_name='A-B 연결 버그 리포트 수')
-
-    def __str__(self):
-        return str(self.similarity)
-
-
 class UserBlackList(models.Model):
     user = models.ForeignKey(User, verbose_name='사용자')
     media = models.ForeignKey(Media, verbose_name='언론사')
