@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <style type="text/css">
 
@@ -44,13 +45,20 @@ body {
 <body>
     <div class="main">
         <div class="list-body">
-            <h5 class="header">구독 리스트</h5>
+            <h5 class="header center">구독 리스트</h5>
+            <div class="center-align">
+                <a id="sort-btn" class="btn-flat waves-effect">
+                    <span id="sort-label"></span>
+                    <i class="material-icons">swap_vert</i>
+                </a>
+            </div>
             <ul id="media-collection" class="collection"></ul>
         </div>
         <div id="update-btn" class="footer">
             <h5>업데이트 하기</h5>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </body>
 
 </html>

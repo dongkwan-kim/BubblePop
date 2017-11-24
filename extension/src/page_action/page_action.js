@@ -1,5 +1,6 @@
 /* Make this boolean false for production */
-NOW_TEST = false;
+var NOW_TEST = false;
+var IS_LIBERAL = true;
 
 var testMediaJSON = [
 ];
@@ -75,7 +76,8 @@ var mediaJSON = [
 
 document.addEventListener("DOMContentLoaded", function(event) {
     addClickListenerToUpdate();
-    mediaJSON = sortMediaJSON(mediaJSON, true);
+    addClickListenerToSort();
+    mediaJSON = sortMediaJSON(mediaJSON, IS_LIBERAL);
     if (NOW_TEST) {
         addMediaCollection(testMediaJSON);
     } else {
@@ -137,6 +139,11 @@ function addMediaCollection(mediaJSON) {
     });
 }
 
+function clearMediaCollection() {
+    var parent = document.getElementById("media-collection");
+    parent.innerHTML = '';
+}
+
 function addCheckedToMediaJSON(mediaJSON) {
     if (NOW_TEST) {
         var blacklist = ['조선일보'];
@@ -172,5 +179,25 @@ function addClickListenerToUpdate() {
     var btn = document.getElementById("update-btn");
     btn.addEventListener("click", (x) => {
         updateBlackList();
+    });
+}
+
+function toggleSortingMedia() {
+    IS_LIBERAL = !IS_LIBERAL;
+    mediaJSON = sortMediaJSON(mediaJSON, IS_LIBERAL);
+    clearMediaCollection();
+    addMediaCollection(mediaJSON);
+}
+
+function addClickListenerToSort() {
+    var btn = document.getElementById("sort-btn");
+
+    /* Initialize */
+    var label = document.getElementById("sort-label");
+    label.innerText = (IS_LIBERAL) ? '진보적인 순' : '보수적인 순';
+
+    btn.addEventListener("click", (x) => {
+        toggleSortingMedia();
+        label.innerText = (IS_LIBERAL) ? '진보적인 순' : '보수적인 순';
     });
 }
