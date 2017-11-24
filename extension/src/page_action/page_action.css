@@ -1,0 +1,38 @@
+.header {
+    margin-bottom: 20px;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.main {
+    padding: 10px;
+    width: 350px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
+
+.list-body {
+    margin-bottom: 55px;
+}
+
+.secondary-content {
+    color: #4267b2;
+}
+
+#update-btn {
+    background-color: #4267b2;
+    width: 100%;
+    font-size: 20px;
+}
