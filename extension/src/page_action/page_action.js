@@ -75,6 +75,7 @@ var mediaJSON = [
 
 document.addEventListener("DOMContentLoaded", function(event) {
     addClickListenerToUpdate();
+    mediaJSON = sortMediaJSON(mediaJSON, true);
     if (NOW_TEST) {
         addMediaCollection(testMediaJSON);
     } else {
@@ -118,6 +119,14 @@ function getCollection(name, icon, affinity, checked) {
         }
     });
     return node;
+}
+
+function sortMediaJSON(mediaJSON, is_liberal_first) {
+    var cpyMediaJSON = JSON.parse(JSON.stringify(mediaJSON));
+    var sign = (is_liberal_first) ? -1 : 1;
+    return cpyMediaJSON.sort((a, b) => {
+        return sign * (a.affinity - b.affinity);
+    });
 }
 
 function addMediaCollection(mediaJSON) {
