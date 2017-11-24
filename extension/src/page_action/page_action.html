@@ -30,12 +30,21 @@ body {
     width: 100%;
     color: white;
     text-align: center;
-    background-color: #4267b2;
     cursor: pointer;
 }
 
 .list-body {
     margin-bottom: 55px;
+}
+
+.secondary-content {
+    color: #4267b2;
+}
+
+#update-btn {
+    background-color: #4267b2;
+    width: 100%;
+    font-size: 20px;
 }
 
 </style>
@@ -54,8 +63,10 @@ body {
             </div>
             <ul id="media-collection" class="collection"></ul>
         </div>
-        <div id="update-btn" class="footer">
-            <h5>업데이트 하기</h5>
+        <div class="footer">
+            <a id="update-btn" class="btn btn-large waves-effect waves-light">
+                업데이트 하기
+            </a>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
