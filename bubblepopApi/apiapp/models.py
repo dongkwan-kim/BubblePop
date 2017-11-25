@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-
 class Media(models.Model):
     name = models.CharField(
         max_length=10,
@@ -51,6 +50,7 @@ class Article(models.Model):
         null=True
     )
     published_at = models.DateField(
+        auto_now_add=True,
         verbose_name='발행일'
     )
     article_url = models.URLField(
@@ -60,6 +60,7 @@ class Article(models.Model):
     category = models.CharField(
         max_length=10,
         verbose_name='분류',
+        default='정치',
         null=True
     )
     cluster = models.ForeignKey(
