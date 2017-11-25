@@ -12,6 +12,7 @@ konlpy==0.4.4
 lxml==4.1.1
 newspaper3k==0.2.5
 nltk==3.2.5
+numpy==1.13.3
 olefile==0.44
 Pillow==4.3.0
 python-dateutil==2.6.1
