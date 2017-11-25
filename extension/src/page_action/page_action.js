@@ -74,10 +74,17 @@ var mediaJSON = [
     }
 ]
 
+
 document.addEventListener("DOMContentLoaded", function(event) {
+    /* Add listners */
     addClickListenerToUpdate();
     addClickListenerToSort();
+
+    /* Manipulate MediaJSON */
+    mediaJSON = normalizeMediaJSON(mediaJSON);
     mediaJSON = sortMediaJSON(mediaJSON, IS_LIBERAL);
+
+    /* Manipulate DOM */
     if (NOW_TEST) {
         addMediaCollection(testMediaJSON);
     } else {
@@ -86,12 +93,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function getHumanReadableAffinity(n) {
-    // TODO more various range
-    if (n < 0) {
-        return '보수';
+    var s;
+    /* n should be normlized 0 ~ 1 */
+    if (n <= 0.25) {
+        s = '매우 보수적';
+    } else if (n <= 0.5) {
+        s = '다소 보수적';
+    } else if (n <= 0.75) {
+        s = '다소 진보적';
     } else {
-        return '진보';
+        s = '매우 진보적';
     }
+    return `${s} (${Math.round(n*100)/100})`;
 }
 
 function getIconFromChecked(checked) {
@@ -128,6 +141,18 @@ function sortMediaJSON(mediaJSON, is_liberal_first) {
     var sign = (is_liberal_first) ? -1 : 1;
     return cpyMediaJSON.sort((a, b) => {
         return sign * (a.affinity - b.affinity);
+    });
+}
+
+function normalizeMediaJSON(mediaJSON) {
+    var affinities = mediaJSON.map((x) => {return x.affinity});
+    var max_affinity = max(affinities);
+    var min_affinity = min(affinities);
+    var delta = max_affinity - min_affinity;
+    var cpyMediaJSON = JSON.parse(JSON.stringify(mediaJSON));
+    return cpyMediaJSON.map((x) => {
+        x.affinity = (x.affinity - min_affinity) / delta;
+        return x;
     });
 }
 
@@ -200,4 +225,27 @@ function addClickListenerToSort() {
         toggleSortingMedia();
         label.innerText = (IS_LIBERAL) ? '진보적인 순' : '보수적인 순';
     });
+}
+
+
+/* Statistics from https://simplestatistics.org/ (ISC License) */
+
+function max(x) {
+    var value = x[0];
+    for (var i = 1; i < x.length; i++) {
+        if (x[i] > value) {
+            value = x[i];
+        }
+    }
+    return value;
+}
+
+function min(x) {
+    var value = x[0];
+    for (var i = 1; i < x.length; i++) {
+        if (x[i] < value) {
+            value = x[i];
+        }
+    }
+    return value;
 }
