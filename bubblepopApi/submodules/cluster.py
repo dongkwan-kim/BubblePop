@@ -1,4 +1,4 @@
-from sim_metrics import *
+from submodules.sim_metrics import *
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import KMeans
 

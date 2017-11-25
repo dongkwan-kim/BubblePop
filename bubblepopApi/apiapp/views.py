@@ -3,11 +3,12 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from submodules.url_strip import url_strip
 from submodules.crawler import crawl
-from apiapp.models import Article, UserProfile, UserBlackList, Report, Media
+from submodules.cluster import cluster
+from apiapp.models import Article, UserProfile, UserBlackList, Report, Media, Cluster
 from django.views.decorators.csrf import csrf_exempt
 
 import json
-
+import random
 
 # Make this value for deploy
 NOW_TEST = True
@@ -41,16 +42,51 @@ def find_articles(request):
 
     black_list = UserBlackList.objects.filter(user=user)
     article = Article.objects.get(article_url = url)
+    media = article.media
+    affinity = media.political_view
 
-    #if (article.cluster is not None):
-        # just show clustered articles
-    #else:
-        # make related articles
+
+    if (article.cluster is None):
+        date = article.published_at
+        articles_for_cluster = Article.objects.filter(published_at=date)
+        nouns_list = [a.morphemed_content for a in articles_for_cluster]
+        cluster_dict = cluster(nouns_list)
+        print(cluster_dict)
+        base = Cluster.objects.all().count()
+        for key in cluster_dict:
+            now_cluster = Cluster.objects.create(cluster_id = base+key)
+            for article_idx in cluster_dict[key]:
+                articles_for_cluster[article_idx].cluster = now_cluster
+                articles_for_cluster[article_idx].save()
+        article = Article.objects.get(article_url = url)
+
+
+
+
+
+    related_articles = Article.objects.filter(cluster=article.cluster).exclude(article_url = article.article_url)
+    same_view_media = Media.objects.all().filter(political_view=affinity)
+    related_diff = related_articles
+    related_diff = related_diff.exclude(media__in=same_view_media)
+    blacked_media = [b.media for b in black_list]
+    related_diff = related_diff.exclude(media__in=blacked_media)
+    if not related_diff.exists():
+        related_diff = related_articles
+
+    count = related_diff.count()
+
+    result = None
+    success = False
+    if count>0:
+        news_idx = random.randrange(0,count)
+        result = related_diff[news_idx].article_url
+        success = True
 
     # for test
     return JsonResponse({
         'url': url,
-        'result': article.cluster.cluster_id,
+        'result': result,
+        'success': success
     })
 
 

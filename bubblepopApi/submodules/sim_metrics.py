@@ -6,11 +6,13 @@ from konlpy.tag import Hannanum
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-han = Hannanum()
-hangul = re.compile('[^ 가-힣]+')
-stop_file = open('stop_words.txt', 'r')
-stop_words = stop_file.read().split(' ')
-stop_file.close()
+
+if __name__ == "__main__":
+    han = Hannanum()
+    hangul = re.compile('[^ 가-힣]+')
+    stop_file = open('./stop_words.txt', 'r')
+    stop_words = stop_file.read().split(' ')
+    stop_file.close()
 
 
 def normalize(doc, as_list=False):
