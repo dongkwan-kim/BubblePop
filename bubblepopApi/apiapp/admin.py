@@ -1,6 +1,6 @@
 from django.contrib import admin
 from apiapp.models import Media, Cluster, Article, \
-        Related, UserBlackList, Report, UserProfile
+        UserBlackList, Report, UserProfile
 
 
 @admin.register(Media)
@@ -17,11 +17,6 @@ class ClusterAdmin(admin.ModelAdmin):
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'content', 'media', 'article_url')
     list_filter = ('media',)
-
-
-@admin.register(Related)
-class RelatedAdmin(admin.ModelAdmin):
-    list_display = ('article_a', 'article_b', 'similarity', 'reports')
 
 
 @admin.register(UserBlackList)

@@ -4,6 +4,13 @@ from django.contrib.auth.models import User
 from submodules.url_strip import url_strip
 from submodules.crawler import crawl
 from apiapp.models import Article, UserProfile, UserBlackList, Report, Media
+from django.views.decorators.csrf import csrf_exempt
+
+import json
+
+
+# Make this value for deploy
+NOW_TEST = True
 
 
 def test(request):
@@ -57,30 +64,38 @@ def blacklist(request):
     })
 
 
+@csrf_exempt
 def change_blacklist(request):
 
     if (request.method != "GET"):
         raise SuspiciousOperation
 
-    media_name = request.GET['media']
+    media_list = request.GET.getlist('media[]')
     user = request.user
-    media = Media.objects.get(name=media_name)
     if not user.is_authenticated:
-        return HttpResponse("Unauthenticated", status=401)
+        if NOW_TEST:
+            user = User.objects.all()[0]
+        else:
+            return HttpResponse("Unauthenticated", status=401)
 
-    black_list = UserBlackList.objects.filter(user=user, media=media)
-    if (black_list.exists()):
-        black_list.delete()
-        return JsonResponse({
-            'media': media_name,
-            'result': False
-        })
+    res = []
+    for media_name in media_list:
+        media = Media.objects.get(name=media_name)
+        black_list = UserBlackList.objects.filter(user=user, media=media)
+        if (black_list.exists()):
+            black_list.delete()
+            res.append({
+                'media': media_name,
+                'result': False
+            })
+        else:
+            UserBlackList.objects.create(user=user, media=media)
+            res.append({
+                'media': media_name,
+                'result': True
+            })
 
-    UserBlackList.objects.create(user=user, media=media)
-    return JsonResponse({
-        'media': media_name,
-        'result': True
-    })
+    return JsonResponse(json.dumps(res, ensure_ascii=False), safe=False)
 
 
 def report(request):
