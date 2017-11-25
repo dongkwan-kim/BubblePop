@@ -82,7 +82,6 @@ def find_articles(request):
         result = related_diff[news_idx].article_url
         success = True
 
-    # for test
     return JsonResponse({
         'url': url,
         'result': result,
