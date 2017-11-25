@@ -1,6 +1,8 @@
 /* Make this boolean false for production */
 var NOW_TEST = false;
 var IS_LIBERAL = true;
+var API_URL = 'http://localhost:23455';
+var BLACK_LIST = [];
 
 var testMediaJSON = [
 ];
@@ -169,15 +171,16 @@ function clearMediaCollection() {
     parent.innerHTML = '';
 }
 
+function api_url(url_for_add) {
+    return API_URL + url_for_add;
+}
+
 function addCheckedToMediaJSON(mediaJSON) {
-    if (NOW_TEST) {
-        var blacklist = ['조선일보'];
-    } else {
-        // TODO fetch blacklist from server
-        var blacklist = [];
-    }
+    // TODO fetch blacklist from server
+    BLACK_LIST = [];
+
     return mediaJSON.map((x) => {
-        x.checked = (blacklist.indexOf(x.name) == -1);
+        x.checked = (BLACK_LIST.indexOf(x.name) == -1);
         return x;
     });
 }
@@ -190,14 +193,26 @@ function updateChecked(iconDOM) {
 function updateBlackList() {
     var checkList = document.getElementsByClassName('check-icon');
     checkList = Array.prototype.slice.call(checkList, 0);
-    var updateJSON = checkList.map((x) => {
-        return {
-            'name': x.getAttribute('name'),
-            'checked': getCheckedFromIcon(x.innerText),
+    var updateList = checkList.filter((x) => {
+        var name = x.getAttribute('name');
+        var checked_before = BLACK_LIST.indexOf(name) == -1;
+        var checked = getCheckedFromIcon(x.innerText);
+        return checked_before != checked;
+    }).map((x) => {
+        return x.getAttribute('name')
+    });
+
+    $.ajax({
+        url: api_url("/api/change"),
+        type: 'GET',
+        data: {
+            media: updateList,
+        },
+        // TODO CORS;
+        success: function(result){
+            console.log(result)
         }
     });
-    // TODO send to server;
-    console.log(updateJSON);
 }
 
 function addClickListenerToUpdate() {
