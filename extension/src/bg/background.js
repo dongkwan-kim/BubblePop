@@ -1,13 +1,44 @@
-// if you checked "fancy-settings" in extensionizr.com, uncomment this lines
+/* Gloabal */
+var IS_AUTHENTICATED = false;
 
-// var settings = new Store("settings", {
-//     "sample_setting": "This is how you use Store.js to remember values"
-// });
+function fetch_black_list() {
+    if (IS_AUTHENTICATED) {
+        // TODO ajax
+        return [0];
+    } else {
+        return [];
+    }
 
+}
 
-//example of using a message handler from the inject scripts
-chrome.extension.onMessage.addListener(
-  function(request, sender, sendResponse) {
-  	chrome.pageAction.show(sender.tab.id);
-    sendResponse();
-  });
+chrome.extension.onConnect.addListener(function(port) {
+    if (port.name == 'auth-event') {
+        port.onMessage.addListener(function(msg) {
+            var type = msg.type;
+            var user_id = msg.user_id;
+            var user_password = msg.user_password;
+            var is_authenticated;
+
+            /* TODO auth */
+            if (type == 'signin') {
+            } else if (type == 'login') {
+            }
+            is_authenticated = true;
+            IS_AUTHENTICATED = is_authenticated;
+
+            var res = {};
+            res.user_id = user_id;
+            res.black_list = fetch_black_list();
+            res.is_authenticated = is_authenticated;
+
+            port.postMessage(res);
+        });
+    } else if (port.name == 'auth-check') {
+        port.onMessage.addListener(function(res) {
+            port.postMessage({
+                is_authenticated: IS_AUTHENTICATED,
+                black_list: fetch_black_list(),
+            });
+        });
+    }
+})

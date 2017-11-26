@@ -76,16 +76,36 @@ var mediaJSON = [
     }
 ]
 
-
 document.addEventListener("DOMContentLoaded", function(event) {
-    var is_authenticated = false;
-    if (is_authenticated) {
-        changeVisibleState('auth-body', false);
-        InitializeMediaCollection();
-    } else {
-        changeVisibleState('list-body', false);
-    }
+    sendToBackground('auth-check', {}, function (msg){
+        var is_authenticated = msg.is_authenticated;
+        BLACK_LIST = msg.black_list;
+        if (is_authenticated) {
+            changeVisibleState('auth-body', false);
+            /* Give some time to construct */
+            setTimeout(function(){
+                InitializeMediaCollection();
+            }, 100);
+
+        } else {
+            changeVisibleState('list-body', false);
+            addClickListenerAuth('signin');
+        }
+    })
 });
+
+/*
+Usage: function sendToBackground("sample", "Hi", function(msg) {
+    console.log("message recieved " + msg);
+})
+*/
+function sendToBackground(name, msg, callback) {
+    var port = chrome.extension.connect({
+        name: name,
+    });
+    port.postMessage(msg);
+    port.onMessage.addListener(callback);
+}
 
 function InitializeMediaCollection() {
     /* Add listners */
@@ -168,8 +188,9 @@ function normalizeMediaJSON(mediaJSON) {
     var min_affinity = min(affinities);
     var delta = max_affinity - min_affinity;
     var cpyMediaJSON = JSON.parse(JSON.stringify(mediaJSON));
-    return cpyMediaJSON.map((x) => {
+    return cpyMediaJSON.map((x, i) => {
         x.affinity = (x.affinity - min_affinity) / delta;
+        x.id = i;
         return x;
     });
 }
@@ -192,11 +213,8 @@ function api_url(url_for_add) {
 }
 
 function addCheckedToMediaJSON(mediaJSON) {
-    // TODO fetch blacklist from server
-    BLACK_LIST = [];
-
     return mediaJSON.map((x) => {
-        x.checked = (BLACK_LIST.indexOf(x.name) == -1);
+        x.checked = (BLACK_LIST.indexOf(x.id) == -1);
         return x;
     });
 }
@@ -210,14 +228,19 @@ function updateBlackList() {
     var checkList = document.getElementsByClassName('check-icon');
     checkList = Array.prototype.slice.call(checkList, 0);
     var updateList = checkList.filter((x) => {
-        var name = x.getAttribute('name');
-        var checked_before = BLACK_LIST.indexOf(name) == -1;
+        var id = x.getAttribute('id');
+        var checked_before = BLACK_LIST.indexOf(id) == -1;
         var checked = getCheckedFromIcon(x.innerText);
         return checked_before != checked;
     }).map((x) => {
-        return x.getAttribute('name')
+        return x.getAttribute('id')
     });
 
+    /*
+    TODO
+    - Move ajax code to background,
+    - Put sendToBackground code here.
+    */
     $.ajax({
         url: api_url("/api/change"),
         type: 'GET',
@@ -255,6 +278,30 @@ function addClickListenerToSort() {
     btn.addEventListener("click", (x) => {
         toggleSortingMedia();
         label.innerText = (IS_LIBERAL) ? '진보적인 순' : '보수적인 순';
+    });
+}
+
+function addClickListenerAuth(type) {
+    var btn_id = (type == 'signin') ? 'signin-btn' : 'login-btn';
+    var btn = document.getElementById(btn_id);
+
+    btn.addEventListener("click", (x) => {
+        var user_id = document.getElementById('user-id');
+        var user_password = document.getElementById('user-password');
+        var type = x.target.id.split('-')[0];
+        var req = {
+            "type": type,
+            "user_id": user_id.value,
+            "user_password": user_password.value,
+        }
+        sendToBackground("auth-event", req, function (res){
+            if (res.is_authenticated) {
+                BLACK_LIST = res.black_list;
+                changeVisibleState('auth-body', false);
+                changeVisibleState('list-body', true);
+                InitializeMediaCollection();
+            }
+        })
     });
 }
 
