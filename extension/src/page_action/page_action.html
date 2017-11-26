@@ -12,8 +12,29 @@
 
 <body>
     <div class="main">
+
+        <h5 class="header center">구독 설정</h5>
+
+        <div class="auth-body">
+            <div class="input-field col s12">
+                <input id="user_id" type="text" class="validate">
+                <label for="user_id">ID</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="user_password" type="password" class="validate">
+                <label for="user_password">Password</label>
+            </div>
+            <div class="right-align">
+                <a id="signin-btn" class="btn waves-effect waves-light indigo">
+                    계정 만들기
+                </a>
+                <a id="login-btn" class="btn waves-effect waves-light indigo">
+                    로그인
+                </a>
+            </div>
+        </div>
+
         <div class="list-body">
-            <h5 class="header center">구독 리스트</h5>
             <div class="center-align">
                 <a id="sort-btn" class="btn-flat waves-effect">
                     <span id="sort-label"></span>
@@ -21,11 +42,11 @@
                 </a>
             </div>
             <ul id="media-collection" class="collection"></ul>
-        </div>
-        <div class="footer">
-            <a id="update-btn" class="btn btn-large waves-effect waves-light">
-                업데이트 하기
-            </a>
+            <div class="footer">
+                <a id="update-btn" class="btn btn-large waves-effect waves-light indigo">
+                    업데이트 하기
+                </a>
+            </div>
         </div>
     </div>
     <script src="materialize.min.js"></script>

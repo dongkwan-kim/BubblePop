@@ -78,6 +78,16 @@ var mediaJSON = [
 
 
 document.addEventListener("DOMContentLoaded", function(event) {
+    var is_authenticated = false;
+    if (is_authenticated) {
+        changeVisibleState('auth-body', false);
+        InitializeMediaCollection();
+    } else {
+        changeVisibleState('list-body', false);
+    }
+});
+
+function InitializeMediaCollection() {
     /* Add listners */
     addClickListenerToUpdate();
     addClickListenerToSort();
@@ -92,7 +102,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
     } else {
         addMediaCollection(mediaJSON);
     }
-});
+}
+
+function changeVisibleState(className, is_visible) {
+    var list_body = document.getElementsByClassName(className)[0];
+    var display_style = (is_visible) ? 'block' : 'none';
+    list_body.style.display = display_style;
+}
 
 function getHumanReadableAffinity(n) {
     var s;
