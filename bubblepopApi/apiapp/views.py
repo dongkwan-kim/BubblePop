@@ -4,8 +4,10 @@ from django.contrib.auth.models import User
 from submodules.url_strip import url_strip
 from submodules.crawler import crawl
 from submodules.cluster import cluster
+from submodules.get_media import save_media
 from apiapp.models import Article, UserProfile, UserBlackList, Report, Media, Cluster
 from django.views.decorators.csrf import csrf_exempt
+
 
 import json
 import random
@@ -162,4 +164,10 @@ def report(request):
 def force_crawl(request):
     count,all = crawl()
     return JsonResponse({'crawl':count,'all':all})
+
+def update_media(request):
+    save_media()
+    return JsonResponse({'result':True})
+
+
 

@@ -1,5 +1,6 @@
 import feedparser
 import time
+import jpype
 import newspaper as news
 from konlpy.tag import Hannanum
 #from konlpy.tag import Mecab
@@ -34,29 +35,29 @@ def crawl():
     global hannanum
     if hannanum==None:
         hannanum = Hannanum()
-
+    if jpype.isJVMStarted():
+        jpype.attachThreadToJVM()
+    hannanum = Hannanum()
     media = Media.objects.all()
     articles = Article.objects.all()
     count = 0
     all = 0
     for medium in media:
-        print(medium.rss_list)
         links = get_URLs(medium.rss_list)
+
         upper_bound = len(links)
+
         all += upper_bound
-        lower_bound = -1
-        idx = upper_bound//2
-        while lower_bound+1 != upper_bound:
-            if articles.filter(article_url=links[idx]).exists():
-                upper_bound = idx
-                idx = lower_bound + (idx-1-lower_bound)//2
-            else:
-                lower_bound = idx
-                idx += (upper_bound - (idx+1))//2 +1
-        new_links = links[:upper_bound]
-        count += upper_bound
-        for link in new_links:
-            article = get_article(link)
+
+        for link in links:
+            #print(link)
+            if (Article.objects.filter(article_url=link)).exists():
+                continue
+            try:
+                article = get_article(link)
+            except:
+                print("Fail:%s"%link)
+                continue
             title = article.title
             content = article.text
             nouns = hannanum.nouns(article.text)
@@ -66,14 +67,18 @@ def crawl():
                 writer = 'anonymous'
             else:
                 writer = article.authors[0]
-            articles.create(
-                title=title,
-                content = content,
-                morphemed_content = morphemed_content,
-                media = medium,
-                writer = writer,
-                article_url = link,
-            )
+            try:
+                articles.create(
+                    title=title,
+                    content = content,
+                    morphemed_content = morphemed_content,
+                    media = medium,
+                    writer = writer,
+                    article_url = link,
+                )
+                count+=1
+            except:
+                continue
     return (count,all)
 
 

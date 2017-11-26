@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^change', view.change_blacklist),
     url(r'^report', view.report),
     url(r'^force_crawl', view.force_crawl),
+    url(r'^update_media', view.update_media),
 ]
