@@ -204,34 +204,40 @@ function fetchSSDVLink(link) {
     // TODO
 }
 
-function embeddedArticle(url, thumbnail, title, description, media) {
+function embeddedArticle(url, thumbnail, title, description, media, icon) {
     var template =
-    '<div class="embedded-article _6m2 _1zpr clearfix _dcs _4_w4 _59ap _5qqr" data-ft="{&quot;tn&quot;:&quot;H&quot;}">'+
-        '<div class="clearfix _2r3x">'+
-            '<div class="lfloat _ohe">'+
-                '<span class="_3m6-">'+
-                    '<div class="_6ks">'+
-                        '<a href="' + url + '" tabindex="-1" target="_blank">'+
-                            '<div class="_6l- __c_">'+
-                                '<div class="uiScaledImageContainer fbStoryAttachmentImage" style="max-width:474px;max-height:247px;">'+
-                                    '<img class="scaledImageFitWidth img" src="' + thumbnail + ' style="top:0px;" alt="" width="474" height="248">'+
-                                '</div>'+
-                            '</div>'+
-                        '</a>'+
-                    '</div>'+
-                    '<div class="_3ekx _29_4"><div class="_6m3 _--6">'+
-                        '<div class="mbs _6m6 _2cnj _5s6c">'+
-                            '<a href="' + url + '" target="_blank">' + title + '</a>'+
-                        '</div>'+
-                        '<div class="_6m7 _3bt9">' + description + '</div>'+
-                        '<div class="_59tj _2iau"><div class="_6lz _6mb ellipsis">' + media + '</div></div>'+
-                    '</div>'+
-                    '<a class="_52c6 SSDV-no-need" href="' + url + '" tabindex="-1" target="_blank"></a>'+
-                    '</div>'+
-                '</span>'+
-            '</div>'+
-            '<div class="_42ef"><span class="_3c21"></span></div>'+
+    '<div>'+
+        '<div class="valign-wrapper embedded-title">'+
+            `<img class="circle" src="${icon}">`+
+            `<span class="media-title">${media}</span>`+
         '</div>'+
+        '<div class="embedded-article _6m2 _1zpr clearfix _dcs _4_w4 _59ap _5qqr" data-ft="{&quot;tn&quot;:&quot;H&quot;}">'+
+            '<div class="clearfix _2r3x">'+
+                '<div class="lfloat _ohe">'+
+                    '<span class="_3m6-">'+
+                        '<div class="_6ks">'+
+                            `<a href="${url}" tabindex="-1" target="_blank">`+
+                                '<div class="_6l- __c_">'+
+                                    '<div class="uiScaledImageContainer fbStoryAttachmentImage" style="max-width:474px;max-height:247px;">'+
+                                        `<img class="scaledImageFitWidth img" src="${thumbnail}" style="top:0px;" alt="" width="474" height="248">`+
+                                    '</div>'+
+                                '</div>'+
+                            '</a>'+
+                        '</div>'+
+                        '<div class="_3ekx _29_4"><div class="_6m3 _--6">'+
+                            '<div class="mbs _6m6 _2cnj _5s6c">'+
+                                `<a href="${url}" target="_blank">${title}</a>`+
+                            '</div>'+
+                            `<div class="_6m7 _3bt9">${description}</div>`+
+                            `<div class="_59tj _2iau"><div class="_6lz _6mb ellipsis">${media}</div></div>`+
+                        '</div>'+
+                        `<a class="_52c6 SSDV-no-need" href="${url}" tabindex="-1" target="_blank"></a>`+
+                        '</div>'+
+                    '</span>'+
+                '</div>'+
+                '<div class="_42ef"><span class="_3c21"></span></div>'+
+            '</div>'+
+        '</div>'
     '</div>'
     return template;
 }
@@ -243,5 +249,6 @@ function testEmbeddedArticle() {
         '20대 10명中 7명 "빼빼로데이 비용 부담 돼"',
         "20대 10명 중 7명은 빼빼로데이를 챙기는 것에 부담을 느끼는 것으로 조사됐다. 구인사이트 알바천국이 10월 27일부터 지난 9일까지 20대 ..",
         "조선일보",
+        "https://scontent.ficn2-1.fna.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/10354686_10150004552801856_220367501106153455_n.jpg?oh=24b240ba2dc60ad31b4319fbab9bb9e2&oe=5A9CD62F",
     );
 }
