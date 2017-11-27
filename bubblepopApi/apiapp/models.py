@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+import binascii
+import os
+
 
 class Media(models.Model):
     name = models.CharField(
@@ -138,3 +141,14 @@ class UserProfile(models.Model):
         default=0,
         verbose_name='클릭한 뉴스'
     )
+    token = models.CharField(
+        max_length=10,
+        default='',
+        verbose_name='토큰',
+    )
+
+    def save_token(self):
+        self.token = binascii.hexlify(os.urandom(10)).decode("utf-8")
+        self.save()
+        return self.token
+
