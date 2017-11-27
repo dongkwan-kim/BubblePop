@@ -22,6 +22,8 @@ def get_URLs(rss_link):
     links = []
     for entry in parsed.entries:
         links.append(url_strip(entry.link))
+    if links[0]==links[1]:
+        links = [entry.link for entry in parsed.entries]
     return links
 
 def get_article(url):
@@ -58,6 +60,7 @@ def crawl():
             except:
                 print("Fail:%s"%link)
                 continue
+            #print(link)
             title = article.title
             content = article.text
             nouns = hannanum.nouns(article.text)

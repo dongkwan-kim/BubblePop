@@ -24,12 +24,6 @@
         "icon": "/static/매일경제.jpg" 
     }, 
     { 
-        "name": "한국경제", 
-        "affinity": -0.19,
-        "rss": "http://rss.hankyung.com/new/news_politics.xml", 
-        "icon": "/static/한국경제.png" 
-    }, 
-    { 
         "name": "한겨레신문", 
         "affinity": 0.53,
         "rss": "http://www.hani.co.kr/rss/politics/", 
@@ -39,7 +33,7 @@
         "name": "경향신문", 
         "affinity": 0.32,
         "rss": "http://www.khan.co.kr/rss/rssdata/politic_news.xml", 
-        "icon": "/static/경향신문.png" 
+        "icon": "/static/경향신문.png"
     }, 
     { 
         "name": "오마이뉴스", 
@@ -52,12 +46,6 @@
         "affinity": 0.37,
         "rss": "http://rss.hankooki.com/daily/dh_politics.xml", 
         "icon": "/static/한국일보.jpg" 
-    }, 
-    { 
-        "name": "세계일보", 
-        "affinity": -0.18,
-        "rss": "http://rss.segye.com/segye_politic.xml", 
-        "icon": "/static/세계일보.jpg" 
     }, 
     { 
         "name": "국민일보", 
