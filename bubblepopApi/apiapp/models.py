@@ -15,6 +15,9 @@ class Media(models.Model):
     icon = models.URLField(
         verbose_name='아이콘'
     )
+    mid = models.IntegerField(
+        verbose_name='식별자'
+    )
 
     def __str__(self):
         return self.name
