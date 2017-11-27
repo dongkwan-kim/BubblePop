@@ -1,7 +1,7 @@
 /* Make this boolean false for production */
 var NOW_TEST = false;
 var IS_LIBERAL = true;
-var API_URL = 'http://localhost:23455';
+var API_URL = 'http://13.124.151.77:23455';
 var BLACK_LIST = [];
 
 var testMediaJSON = [
@@ -33,12 +33,6 @@ var mediaJSON = [
         "icon": "../../icons/매일경제.jpg"
     },
     {
-        "name": "한국경제",
-        "affinity": -0.19,
-        "rss": "http://rss.hankyung.com/new/news_politics.xml",
-        "icon": "../../icons/한국경제.png"
-    },
-    {
         "name": "한겨레신문",
         "affinity": 0.53,
         "rss": "http://www.hani.co.kr/rss/politics/",
@@ -61,12 +55,6 @@ var mediaJSON = [
         "affinity": 0.37,
         "rss": "http://rss.hankooki.com/daily/dh_politics.xml",
         "icon": "../../icons/한국일보.jpg"
-    },
-    {
-        "name": "세계일보",
-        "affinity": -0.18,
-        "rss": "http://rss.segye.com/segye_politic.xml",
-        "icon": "../../icons/세계일보.jpg"
     },
     {
         "name": "국민일보",
@@ -235,10 +223,10 @@ function updateBlackList() {
     }).map((x) => {
         return parseInt(x.getAttribute('mid'));
     });
-
+    
     sendToBackground("update-black-list", {
         update_list: updateList,
-    }, function (res) { /* Do nothing */ })
+    }, function (res) { console.log(res) })
 }
 
 function addClickListenerToUpdate() {
