@@ -12,8 +12,8 @@ def user_login(request):
         user = authenticate(username=username,password=password)
         if user is not None:
             login(request,user)
-            return JsonRequset({'result':True})
-    return JsonRequest({'result':False})
+            return JsonResponse({'result':True})
+    return JsonReseponse({'result':False})
 
 def user_register(request):
     if request.method == 'POST':
@@ -21,9 +21,9 @@ def user_register(request):
         password = request.POST['password']
         password_check = request.POST['password_check']
         if User.filter(username=username).exists():
-            return JsonRequest({'result':False,'duplicated':True})
+            return JsonResponse({'result':False,'duplicated':True})
         user = User.objects.create_user(username=username,password=password)
-        return JsonRequest({'result':True,'duplicated':False})
+        return JsonReseponse({'result':True,'duplicated':False})
 
 
 
