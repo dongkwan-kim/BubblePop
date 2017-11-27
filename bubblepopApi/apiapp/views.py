@@ -10,7 +10,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 import json
-import random
 import datetime
 
 # Make this value for deploy
@@ -81,33 +80,29 @@ def find_articles(request):
 
 
 
+
     related_articles = Article.objects.filter(cluster=article.cluster).exclude(article_url = article.article_url)
-    affinity_standard = 0.15
-    if (affinity>0.15):
-        same_view_media = Media.objects.all().exclude(political_view__lte=affinity)
-    else:
-        same_view_media = Media.objects.all().filter(political_view__lte=affinity)
 
-    related_diff = related_articles
-    related_diff = related_diff.exclude(media__in=same_view_media)
+    if related_articles.count()==0:
+        return JsonResponse({'success':False,'article_list':None})
+
     blacked_media = [b.media for b in black_list]
-    related_diff = related_diff.exclude(media__in=blacked_media)
-    if not related_diff.exists():
-        related_diff = related_articles
+    related_diff = related_articles.exclude(media__in=blacked_media)
 
-    count = related_diff.count()
+    article_list = []
+    for related in related_diff:
+        article_dict = {}
+        article_dict['title'] = related.title
+        article_dict['description'] = related.content[:80]
+        article_dict['url'] = related.article_url
+        article_dict['media_name'] = related.media.name
+        article_dict['media_icon'] = related.media.icon
+        article_list.append(article_dict)
 
-    result = None
-    success = False
-    if count>0:
-        news_idx = random.randrange(0,count)
-        result = related_diff[news_idx].article_url
-        success = True
 
     return JsonResponse({
-        'url': url,
-        'result': result,
-        'success': success
+        'success': True,
+        'article_list': article_list,
     })
 
 
