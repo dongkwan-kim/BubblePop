@@ -40,12 +40,13 @@ def check_url(request):
 
 
 def find_articles(request):
-
+    print(request.GET)
     if (request.method != "GET"):
         raise SuspiciousOperation
 
     url = request.GET['url']
     user = request.user
+    print(user.username)
     if not user.is_authenticated:
         return HttpResponse("Unauthenticated", status=401)
 
@@ -112,7 +113,7 @@ def blacklist(request):
         return HttpResponse("Unauthenticated", status=401)
     black_list = UserBlackList.objects.filter(user=user)
     return JsonResponse({
-        "result": [n.get_media() for n in list(black_list)]
+        "result": [n.media.mid for n in list(black_list)]
     })
 
 
