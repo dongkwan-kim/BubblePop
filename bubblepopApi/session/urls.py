@@ -18,12 +18,6 @@ from apiapp import views as view
 
 
 urlpatterns = [
-    url(r'^test', view.test),
-    url(r'^check', view.check_url),
-    url(r'^articles', view.find_articles),
-    url(r'^blacklist', view.blacklist),
-    url(r'^change', view.change_blacklist),
-    url(r'^report', view.report),
-    url(r'^force_crawl', view.force_crawl),
-    url(r'^update_media', view.update_media),
+    url(r'^login', view.user_login),
+    url(r'^register', view.user_register),
 ]
