@@ -29,6 +29,7 @@
       "css": [
         "src/inject/modal.css",
         "src/inject/inject.css",
+        "src/inject/col.css",
         "src/inject/billboard.min.css"
       ]
     },
