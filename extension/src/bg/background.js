@@ -1,5 +1,10 @@
 /* Gloabal */
 var IS_AUTHENTICATED = false;
+var API_URL = 'http://13.124.151.77:8080';
+
+function api_url(url_for_add) {
+    return API_URL + url_for_add;
+}
 
 function fetch_black_list() {
     if (IS_AUTHENTICATED) {
@@ -24,7 +29,30 @@ chrome.extension.onConnect.addListener(function(port) {
 
             /* TODO auth */
             if (type == 'signin') {
+                $.ajax({
+                    url: api_url("/session/register"),
+                    type: 'POST',
+                    data: {
+                        username: user_id,
+                        password: user_password,
+                        password_check: user_password,
+                    },
+                    success: function(result){
+                        console.log(result)
+                    }
+                });
             } else if (type == 'login') {
+                $.ajax({
+                    url: api_url("/session/login"),
+                    type: 'POST',
+                    data: {
+                        username: user_id,
+                        password: user_password,
+                    },
+                    success: function(result){
+                        console.log(result)
+                    }
+                });
             }
             is_authenticated = true;
             IS_AUTHENTICATED = is_authenticated;

@@ -89,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         } else {
             changeVisibleState('list-body', false);
             addClickListenerAuth('signin');
+            addClickListenerAuth('login');
         }
     })
 });
