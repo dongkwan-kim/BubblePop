@@ -8,7 +8,10 @@ function fetch_black_list() {
     } else {
         return [];
     }
+}
 
+function update_black_list(port, lst) {
+    // TODO ajax and send response to port;
 }
 
 chrome.extension.onConnect.addListener(function(port) {
@@ -39,6 +42,10 @@ chrome.extension.onConnect.addListener(function(port) {
                 is_authenticated: IS_AUTHENTICATED,
                 black_list: fetch_black_list(),
             });
+        });
+    } else if (port.name == 'update-black-list') {
+        port.onMessage.addListener(function(res) {
+            update_black_list(port, res.update_list);
         });
     }
 })

@@ -86,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             setTimeout(function(){
                 InitializeMediaCollection();
             }, 100);
-
         } else {
             changeVisibleState('list-body', false);
             addClickListenerAuth('signin');
@@ -153,7 +152,7 @@ function getCheckedFromIcon(icon) {
     return (icon == 'check_box');
 }
 
-function getCollection(name, icon, affinity, checked) {
+function getCollection(mid, name, icon, affinity, checked) {
     var node = document.createElement("LI");
     node.classList.add("collection-item");
     node.classList.add("avatar");
@@ -162,7 +161,7 @@ function getCollection(name, icon, affinity, checked) {
         '<span class="title">' + name + '</span>'+
         '<p>' + getHumanReadableAffinity(affinity) + '</p>'+
         '<a href="#!" class="secondary-content">'+
-            '<i name="' + name + '" class="material-icons check-icon">'+
+            '<i mid="' + mid + '" class="material-icons check-icon">'+
                 getIconFromChecked(checked) +
             '</i>'+
         '</a>';
@@ -199,7 +198,7 @@ function addMediaCollection(mediaJSON) {
     var parent = document.getElementById("media-collection");
     mediaJSON = addCheckedToMediaJSON(mediaJSON);
     mediaJSON.map((x) => {
-        parent.appendChild(getCollection(x.name, x.icon, x.affinity, x.checked));
+        parent.appendChild(getCollection(x.id, x.name, x.icon, x.affinity, x.checked));
     });
 }
 
@@ -228,30 +227,17 @@ function updateBlackList() {
     var checkList = document.getElementsByClassName('check-icon');
     checkList = Array.prototype.slice.call(checkList, 0);
     var updateList = checkList.filter((x) => {
-        var id = x.getAttribute('id');
+        var id = parseInt(x.getAttribute('mid'));
         var checked_before = BLACK_LIST.indexOf(id) == -1;
         var checked = getCheckedFromIcon(x.innerText);
         return checked_before != checked;
     }).map((x) => {
-        return x.getAttribute('id')
+        return parseInt(x.getAttribute('mid'));
     });
 
-    /*
-    TODO
-    - Move ajax code to background,
-    - Put sendToBackground code here.
-    */
-    $.ajax({
-        url: api_url("/api/change"),
-        type: 'GET',
-        data: {
-            media: updateList,
-        },
-        // TODO CORS;
-        success: function(result){
-            console.log(result)
-        }
-    });
+    sendToBackground("update-black-list", {
+        update_list: updateList,
+    }, function (res) { /* Do nothing */ })
 }
 
 function addClickListenerToUpdate() {
