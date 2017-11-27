@@ -25,11 +25,18 @@ def check_url(request):
         raise SuspiciousOperation
     url = request.GET['url']
     url = url_strip(url)
-    # check url
+    result = Article.objects.filter(article_url=url).exists()
+
+    if result==True:
+        user = request.user
+        if user.is_authenticated:
+            profile = UserProfile.objects.get(user=user)
+            profile.shown_news+=1
+            profile.save()
 
     return JsonResponse({
         'url': url,
-        'result': Article.objects.filter(article_url=url).exists(),
+        'result': result,
     })
 
 
@@ -42,6 +49,10 @@ def find_articles(request):
     user = request.user
     if not user.is_authenticated:
         return HttpResponse("Unauthenticated", status=401)
+
+    profile = UserProfile.objects.get(user=user)
+    profile.clicked_news+=1
+    profile.save()
 
     black_list = UserBlackList.objects.filter(user=user)
     article = Article.objects.get(article_url = url)
