@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 import json
-import random
+import datetime
 
 # Make this value for deploy
 NOW_TEST = True
@@ -24,11 +24,18 @@ def check_url(request):
         raise SuspiciousOperation
     url = request.GET['url']
     url = url_strip(url)
-    # check url
+    result = Article.objects.filter(article_url=url).exists()
+
+    if result==True:
+        user = request.user
+        if user.is_authenticated:
+            profile = UserProfile.objects.get(user=user)
+            profile.shown_news+=1
+            profile.save()
 
     return JsonResponse({
         'url': url,
-        'result': Article.objects.filter(article_url=url).exists(),
+        'result': result,
     })
 
 
@@ -42,6 +49,10 @@ def find_articles(request):
     if not user.is_authenticated:
         return HttpResponse("Unauthenticated", status=401)
 
+    profile = UserProfile.objects.get(user=user)
+    profile.clicked_news+=1
+    profile.save()
+
     black_list = UserBlackList.objects.filter(user=user)
     article = Article.objects.get(article_url = url)
     media = article.media
@@ -50,10 +61,13 @@ def find_articles(request):
 
     if (article.cluster is None):
         date = article.published_at
-        articles_for_cluster = Article.objects.filter(published_at=date)
+        articles_for_cluster = Article.objects.filter(
+                published_at__gte=date-datetime.timedelta(days=1))
+        articles_for_cluster = articles_for_cluster.filter(
+                published_at__lte=date+datetime.timedelta(days=1))
         nouns_list = [a.morphemed_content for a in articles_for_cluster]
         cluster_dict = cluster(nouns_list)
-        print(cluster_dict)
+        #print(cluster_dict)
         base = Cluster.objects.all().count()
         for key in cluster_dict:
             now_cluster = Cluster.objects.create(cluster_id = base+key)
@@ -66,28 +80,29 @@ def find_articles(request):
 
 
 
+
     related_articles = Article.objects.filter(cluster=article.cluster).exclude(article_url = article.article_url)
-    same_view_media = Media.objects.all().filter(political_view=affinity)
-    related_diff = related_articles
-    related_diff = related_diff.exclude(media__in=same_view_media)
+
+    if related_articles.count()==0:
+        return JsonResponse({'success':False,'article_list':None})
+
     blacked_media = [b.media for b in black_list]
-    related_diff = related_diff.exclude(media__in=blacked_media)
-    if not related_diff.exists():
-        related_diff = related_articles
+    related_diff = related_articles.exclude(media__in=blacked_media)
 
-    count = related_diff.count()
+    article_list = []
+    for related in related_diff:
+        article_dict = {}
+        article_dict['title'] = related.title
+        article_dict['description'] = related.content[:80]
+        article_dict['url'] = related.article_url
+        article_dict['media_name'] = related.media.name
+        article_dict['media_icon'] = related.media.icon
+        article_list.append(article_dict)
 
-    result = None
-    success = False
-    if count>0:
-        news_idx = random.randrange(0,count)
-        result = related_diff[news_idx].article_url
-        success = True
 
     return JsonResponse({
-        'url': url,
-        'result': result,
-        'success': success
+        'success': True,
+        'article_list': article_list,
     })
 
 

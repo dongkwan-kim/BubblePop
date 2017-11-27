@@ -22,6 +22,8 @@ def get_URLs(rss_link):
     links = []
     for entry in parsed.entries:
         links.append(url_strip(entry.link))
+    if links[0]==links[1]:
+        links = [entry.link for entry in parsed.entries]
     return links
 
 def get_article(url):
@@ -44,20 +46,21 @@ def crawl():
     all = 0
     for medium in media:
         links = get_URLs(medium.rss_list)
-
+        #print(links)
         upper_bound = len(links)
 
         all += upper_bound
 
         for link in links:
             #print(link)
-            if (Article.objects.filter(article_url=link)).exists():
+            if Article.objects.filter(article_url=link).exists():
                 continue
             try:
                 article = get_article(link)
             except:
                 print("Fail:%s"%link)
                 continue
+            #print(link)
             title = article.title
             content = article.text
             nouns = hannanum.nouns(article.text)
@@ -78,6 +81,7 @@ def crawl():
                 )
                 count+=1
             except:
+                print("Fils:%s,title:%s"%(link,title))
                 continue
     return (count,all)
 
