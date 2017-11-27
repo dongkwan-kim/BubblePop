@@ -1,53 +1,62 @@
 [ 
     { 
+        "mid": 0,
         "name": "조선일보", 
         "affinity": -0.11,
         "rss":"http://www.chosun.com/site/data/rss/politics.xml",   
         "icon": "/static/조선일보.jpg"
     }, 
     { 
+        "mid": 1,
         "name": "중앙일보", 
         "affinity": -0.03,
         "rss": "http://rss.joins.com/joins_politics_list.xml", 
         "icon": "/static/중앙일보.jpg" 
     }, 
     { 
+        "mid": 2,
         "name": "동아일보", 
         "affinity": 0.01,
         "rss": "http://rss.donga.com/politics.xml", 
         "icon": "/static/동아일보.jpg" 
     }, 
     { 
+        "mid": 3,
         "name": "매일경제", 
         "affinity": 0.14,
         "rss": "http://file.mk.co.kr/news/rss/rss_30200030.xml", 
         "icon": "/static/매일경제.jpg" 
     }, 
     { 
+        "mid": 4,
         "name": "한겨레신문", 
         "affinity": 0.53,
         "rss": "http://www.hani.co.kr/rss/politics/", 
         "icon": "/static/한겨레신문.jpg" 
     }, 
     { 
+        "mid": 5,
         "name": "경향신문", 
         "affinity": 0.32,
         "rss": "http://www.khan.co.kr/rss/rssdata/politic_news.xml", 
         "icon": "/static/경향신문.png"
     }, 
     { 
+        "mid": 6,
         "name": "오마이뉴스", 
         "affinity": 0.42,
         "rss": "http://rss.ohmynews.com/rss/politics.xml", 
         "icon": "/static/오마이뉴스.png" 
     }, 
     { 
+        "mid": 7,
         "name": "한국일보", 
         "affinity": 0.37,
         "rss": "http://rss.hankooki.com/daily/dh_politics.xml", 
         "icon": "/static/한국일보.jpg" 
     }, 
     { 
+        "mid": 8,
         "name": "국민일보", 
         "affinity": 0.18,
         "rss": "http://rss.kmib.co.kr/data/kmibPolRss.xml", 
