@@ -194,14 +194,22 @@ function modalHandler(ssdvModal, link) {
 
     var modalBody = c.getElementsByClassName("modal-body")[0];
     // TODO Replace below to fetchSSDVLink: callback or promise.
+    fetchSSDVFromBackground(link);
+    /*
     var ea = testEmbeddedArticle();
     modalBody.innerHTML = ea;
     ssdvModal.show();
     testUpdateAffinityGraph();
+    */
 }
 
-function fetchSSDVLink(link) {
-    // TODO
+function fetchSSDVFromBackground(link) {
+    chrome.runtime.sendMessage({
+        type: 'fetch-ssdv',
+        article_url: link,
+    }, function(response) {
+        console.log(response);
+    });
 }
 
 function embeddedArticle(url, title, description, media, icon) {

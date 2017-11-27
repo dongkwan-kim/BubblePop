@@ -77,3 +77,20 @@ chrome.extension.onConnect.addListener(function(port) {
         });
     }
 })
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (request.type == 'fetch-ssdv') {
+            var article_url = request.article_url;
+            $.ajax({
+                url: api_url(`/api/articles/?url=${article_url}`),
+                type: 'GET',
+                success: function(result){
+                    sendResponse({
+                        result: result,
+                    });
+                }
+            });
+        }
+    }
+);
