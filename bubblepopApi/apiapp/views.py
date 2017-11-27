@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 import json
 import random
+import datetime
 
 # Make this value for deploy
 NOW_TEST = True
@@ -50,10 +51,13 @@ def find_articles(request):
 
     if (article.cluster is None):
         date = article.published_at
-        articles_for_cluster = Article.objects.filter(published_at=date)
+        articles_for_cluster = Article.objects.filter(
+                published_at__gte=date-datetime.timedelta(days=1))
+        articles_for_cluster = articles_for_cluster.filter(
+                published_at__lte=date+datetime.timedelta(days=1))
         nouns_list = [a.morphemed_content for a in articles_for_cluster]
         cluster_dict = cluster(nouns_list)
-        print(cluster_dict)
+        #print(cluster_dict)
         base = Cluster.objects.all().count()
         for key in cluster_dict:
             now_cluster = Cluster.objects.create(cluster_id = base+key)
@@ -67,7 +71,12 @@ def find_articles(request):
 
 
     related_articles = Article.objects.filter(cluster=article.cluster).exclude(article_url = article.article_url)
-    same_view_media = Media.objects.all().filter(political_view=affinity)
+    affinity_standard = 0.15
+    if (affinity>0.15):
+        same_view_media = Media.objects.all().exclude(political_view__lte=affinity)
+    else:
+        same_view_media = Media.objects.all().filter(political_view__lte=affinity)
+
     related_diff = related_articles
     related_diff = related_diff.exclude(media__in=same_view_media)
     blacked_media = [b.media for b in black_list]
