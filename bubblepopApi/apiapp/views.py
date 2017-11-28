@@ -23,7 +23,7 @@ def check_url(request):
     if (request.method != "POST"):
         raise SuspiciousOperation
 
-    url = request.GET['url']
+    url = request.POST['url']
     url = url_strip(url)
     result = Article.objects.filter(article_url=url).exists()
 
@@ -32,7 +32,7 @@ def check_url(request):
         profile = UserProfile.objects.filter(token=token)
         if profile:
             profile = profile[0]
-            profile.shown_news+=1
+            profile.shown_news += 1
             profile.save()
 
     return JsonResponse({
