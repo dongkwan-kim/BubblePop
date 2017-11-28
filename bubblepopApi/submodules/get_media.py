@@ -22,6 +22,7 @@ def save_media():
             exist_medium.rss_list=medium['rss']
             exist_medium.political_view=medium['affinity']
             exist_medium.icon=medium['icon']
+            exist_medium.mid=medium['mid']
             exist_medium.save()
         else:
             print(medium['name'])
@@ -30,6 +31,7 @@ def save_media():
                 rss_list=medium['rss'],
                 political_view=medium['affinity'],
                 icon=medium['icon'],
+                mid=medium['mid'],
                 )
     return
 
