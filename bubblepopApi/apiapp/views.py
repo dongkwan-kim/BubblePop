@@ -48,6 +48,7 @@ def find_articles(request):
         raise SuspiciousOperation
 
     url = request.POST['url']
+    url = url_strip(url)
     token = request.POST['token']
     profile = UserProfile.objects.filter(token=token)
     if profile:
@@ -55,6 +56,14 @@ def find_articles(request):
         user = profile.user
     else:
         return HttpResponse("Unauthenticated", status=401)
+
+    # for debug don't erase
+    #user = request.user
+    #url = request.GET['url']
+    #url = url_strip(url)
+    #profile = UserProfile.objects.get(user=user)
+
+
 
     profile.clicked_news += 1
     profile.save()
@@ -88,6 +97,12 @@ def find_articles(request):
 
     blacked_media = [b.media for b in black_list]
     related_diff = related_articles.exclude(media__in=blacked_media)
+    reported = Report.objects.filter(user=user,article_a=article)
+    related_diff = related_diff.exclude(id__in=[a.article_b.id for a in reported])
+    reported = Report.objects.filter(user=user,article_b=article)
+    related_diff = related_diff.exclude(id__in=[a.article_a.id for a in reported])
+
+
 
     article_list = []
     for related in related_diff:
