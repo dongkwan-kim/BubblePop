@@ -63,8 +63,6 @@ def find_articles(request):
     #url = url_strip(url)
     #profile = UserProfile.objects.get(user=user)
 
-
-
     profile.clicked_news += 1
     profile.save()
 
@@ -102,8 +100,6 @@ def find_articles(request):
     reported = Report.objects.filter(user=user,article_b=article)
     related_diff = related_diff.exclude(id__in=[a.article_a.id for a in reported])
 
-
-
     article_list = []
     for related in related_diff:
         article_dict = {}
@@ -117,6 +113,7 @@ def find_articles(request):
     return JsonResponse({
         'success': True,
         'article_list': article_list,
+        'black_list': [str(m) for m in blacked_media],
     })
 
 
