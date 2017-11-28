@@ -104,13 +104,9 @@ chrome.runtime.onMessage.addListener(
                     token: TOKEN,
                     url: article_url,
                 },
-                success: function(result){
-                    console.log(result);
-                    sendResponse({
-                        result: result,
-                    });
-                }
+                success: sendResponse,
             });
         }
+        return true;
     }
 );
