@@ -215,6 +215,23 @@ function modalHandler(ssdvModal, link) {
             media_count[user_media_list.indexOf(lst[i].media_name)] += 1;
         }
         modalBody.innerHTML = html;
+
+        /* Error report */
+        var report_btns = modalBody.getElementsByClassName('report-btn');
+        report_btns = Array.prototype.slice.call(report_btns, 0);
+        report_btns.map((x) => {
+            x.addEventListener('click', (e) => {
+                var data = e.target.getAttribute('data');
+                chrome.runtime.sendMessage({
+                    type: 'error-report',
+                    url_a: link,
+                    url_b: data,
+                }, function (response) {
+                    alert('신고되었습니다. 감사합니다.')
+                })
+            })
+        });
+        
         ssdvModal.show();
         updateAffinityGraph('.modal-graph', media_count, user_media_list);
     });

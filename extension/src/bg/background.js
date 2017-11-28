@@ -106,6 +106,20 @@ chrome.runtime.onMessage.addListener(
                 },
                 success: sendResponse,
             });
+        } else if (request.type == 'error-report') {
+            var url_a = request.url_a;
+            var url_b = request.url_b;
+            $.ajax({
+                url: api_url('/api/report/'),
+                type: 'POST',
+                data: {
+                    token: TOKEN,
+                    url_a: url_a,
+                    url_b: url_b,
+                    content: '',
+                },
+                success: sendResponse,
+            });
         }
         return true;
     }
