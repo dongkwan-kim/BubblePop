@@ -18,6 +18,7 @@
 
 .article {
     margin-right: 10px!important;
+    margin-bottom: 4px!important;
 }
 
 .embedded-article {
@@ -37,6 +38,7 @@
 
 .media-title {
     font-weight: 500;
+    font-size: 11px;
 }
 
 .my_6m3 {
@@ -48,5 +50,5 @@
 }
 
 .report-btn {
-
+    font-size: 11px;
 }

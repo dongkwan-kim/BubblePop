@@ -1,3 +1,11 @@
+var API_URL = 'http://13.124.151.77:23455';
+var MEDIA_LIST = ['조선일보', '중앙일보', '동아일보', '매일경제', '국민일보',
+    '경향신문', '한국일보', '오마이뉴스', '한겨레신문'];
+
+function api_url(url_for_add) {
+    return API_URL + url_for_add;
+}
+
 chrome.extension.sendMessage({}, function(response) {
     var readyStateCheckInterval = setInterval(function() {
         if (document.readyState === "complete") {
@@ -62,7 +70,6 @@ function appendSSDVBtn(linkDOM, link, ssdvModal) {
     node.appendChild(textnode);
 
     injectDOM.appendChild(node);
-    console.log(node);
 }
 
 function getAncestor(dom, num) {
@@ -180,35 +187,36 @@ function getColorGradientList(numberOfItems, start, end) {
     return r;
 }
 
-function testUpdateAffinityGraph() {
-    updateAffinityGraph('.modal-graph',
-        [3, 2, 3, 1, 1, 2, 1, 2, 2, 1, 1, 1, 2],
-        ["조선", "중앙", "동아", "매경", "한경", "한겨레", "경향",
-            "오마이", "한국", "세계", "국민", "헤럴드", "노컷"]);
-}
-
 function modalHandler(ssdvModal, link) {
     var c = ssdvModal.child;
     var modalHeader = c.getElementsByClassName("modal-header")[0];
     modalHeader.innerHTML = '다른 시각의 뉴스';
 
     var modalBody = c.getElementsByClassName("modal-body")[0];
-    // TODO Replace below to fetchSSDVLink: callback or promise.
-    fetchSSDVFromBackground(link);
-    /*
-    var ea = testEmbeddedArticle();
-    modalBody.innerHTML = ea;
-    ssdvModal.show();
-    testUpdateAffinityGraph();
-    */
-}
 
-function fetchSSDVFromBackground(link) {
+    /* fetchSSDVFromBackground */
     chrome.runtime.sendMessage({
         type: 'fetch-ssdv',
         article_url: link,
-    }, function(response) {
-        console.log(response);
+    }, function (response) {
+
+        if (!response.success)
+            return;
+
+        var lst = response.article_list;
+        var user_media_list = MEDIA_LIST.filter((x) => {
+            return response.black_list.indexOf(x) == -1;
+        })
+        var html = '';
+        var media_count = user_media_list.map(() => {return 0});
+        for (var i = 0; i < lst.length; i++) {
+            html += embeddedArticle(lst[i].url, lst[i].title,
+                lst[i].description, lst[i].media_name, api_url(lst[i].media_icon));
+            media_count[user_media_list.indexOf(lst[i].media_name)] += 1;
+        }
+        modalBody.innerHTML = html;
+        ssdvModal.show();
+        updateAffinityGraph('.modal-graph', media_count, user_media_list);
     });
 }
 
@@ -238,14 +246,4 @@ function embeddedArticle(url, title, description, media, icon) {
         '</div>'+
     '</div>'
     return template;
-}
-
-function testEmbeddedArticle() {
-    return embeddedArticle(
-        "http://news.chosun.com/site/data/html_dir/2017/11/11/2017111100920.html?Dep0=facebook&topics",
-        '20대 10명中 7명 "빼빼로데이 비용 부담 돼"',
-        "20대 10명 중 7명은 빼빼로데이를 챙기는 것에 부담을 느끼는 것으로 조사됐다. 구인사이트 알바천국이 10월 27일부터 지난 9일까지 20대 ..",
-        "조선일보",
-        "https://scontent.ficn2-1.fna.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/10354686_10150004552801856_220367501106153455_n.jpg?oh=24b240ba2dc60ad31b4319fbab9bb9e2&oe=5A9CD62F",
-    );
 }
