@@ -120,6 +120,18 @@ chrome.runtime.onMessage.addListener(
                 },
                 success: sendResponse,
             });
+        } else if (request.type == 'check-url') {
+            var article_url = request.article_url;
+            console.log(article_url);
+            $.ajax({
+                url: api_url('/api/check/'),
+                type: 'POST',
+                data: {
+                    token: TOKEN,
+                    url: article_url,
+                },
+                success: sendResponse,
+            });
         }
         return true;
     }

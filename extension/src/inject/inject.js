@@ -34,31 +34,47 @@ function parseFeedPeriod(period, ssdvModal) {
         /* If feed has been changed, parse again. */
         if(state.oldFeed != state.newFeed) {
             for(var i = 0; i < linkList.length; i++) {
-                linkDOM = linkList[i];
+                var linkDOM = linkList[i];
                 realLink = getRealLink(linkDOM.href);
-                if(isServiceable(realLink)){
-                    appendSSDVBtn(linkList[i], realLink, ssdvModal);
-                }
+                appendSSDVBtnServiceable(linkDOM, realLink, ssdvModal, appendSSDVBtn);
             }
             state.oldFeed = state.newFeed;
         }
     }, period);
 }
 
-/* If system can give SSDV list of the given link, return true. */
-function isServiceable(link) {
-    // TODO: implementation w/ Ajax
-    return true;
+/* If system can give SSDV list of the given link, run callback */
+function appendSSDVBtnServiceable(linkDOM, realLink, ssdvModal, callback) {
+
+    /* If it is already inspected or it is from Modal,
+       do not add SSDVBtn. */
+    if(hasClass(linkDOM, "SSDV-marked")
+        || hasClass(linkDOM, "SSDV-no-need")){
+        return;
+    }
+
+    linkDOM.classList.add("SSDV-marked");
+
+    chrome.runtime.sendMessage({
+        type: 'check-url',
+        article_url: realLink,
+    }, function (response) {
+        if (response.result) {
+            callback(linkDOM, realLink, ssdvModal);
+        }
+    });
 }
 
 function appendSSDVBtn(linkDOM, link, ssdvModal) {
     var injectDOM = getAncestor(linkDOM, 8);
 
-    /* If there's already SSDVBtn, do not add again. */
+    /* If there's already SSDVBtn or it is from Modal,
+       do not add SSDVBtn. */
     if(hasClass(injectDOM, "SSDV-added")
         || hasClass(linkDOM, "SSDV-no-need")){
         return;
     }
+
     injectDOM.classList.add("SSDV-added")
 
     var node = document.createElement("DIV");
@@ -231,7 +247,7 @@ function modalHandler(ssdvModal, link) {
                 })
             })
         });
-        
+
         ssdvModal.show();
         updateAffinityGraph('.modal-graph', media_count, user_media_list);
     });
