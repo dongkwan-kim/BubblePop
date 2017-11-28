@@ -182,9 +182,9 @@ def report(request):
     else:
         return HttpResponse("Unauthenticated", status=401)
 
-    url1 = request.GET['url_a']
-    url2 = request.GET['url_b']
-    content = request.GET['content']
+    url1 = url_strip(request.POST['url_a'])
+    url2 = request.POST['url_b']
+    content = request.POST['content']
 
     article1 = Article.objects.get(article_url=url1)
     article2 = Article.objects.get(article_url=url2)
