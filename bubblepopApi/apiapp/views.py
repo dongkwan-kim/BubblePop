@@ -55,7 +55,11 @@ def find_articles(request):
         profile = profile[0]
         user = profile.user
     else:
-        return HttpResponse("Unauthenticated", status=401)
+        return JsonResponse(
+                status=401,
+                data={'success': False}
+            )
+
 
     # for debug don't erase
     #user = request.user
