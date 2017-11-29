@@ -216,8 +216,15 @@ function modalHandler(ssdvModal, link) {
         article_url: link,
     }, function (response) {
 
-        if (!response.success)
+        if (!response.success) {
+            /* Unauthorized */
+            if (response.status == 401) {
+                alert("로그인이 필요합니다. 탭 오른쪽에서 'BubblePop' 아이콘을 클릭해주세요!");
+            } else {
+                console.log(response);
+            }
             return;
+        }
 
         var lst = response.article_list;
         var user_media_list = MEDIA_LIST.filter((x) => {

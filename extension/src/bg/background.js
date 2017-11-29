@@ -127,6 +127,7 @@ chrome.runtime.onMessage.addListener(
                     url: article_url,
                 },
                 success: sendResponse,
+                error: sendResponse,
             });
         } else if (request.type == 'error-report') {
             var url_a = request.url_a;
