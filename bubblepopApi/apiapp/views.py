@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
+from numpy import argsort
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 from submodules.url_strip import url_strip
 from submodules.crawler import crawl
 from submodules.cluster import cluster
@@ -103,6 +106,19 @@ def find_articles(request):
     related_diff = related_diff.exclude(id__in=[a.article_b.id for a in reported])
     reported = Report.objects.filter(user=user,article_b=article)
     related_diff = related_diff.exclude(id__in=[a.article_a.id for a in reported])
+
+    if len(related_diff) > 10:
+        tfidf = TfidfVectorizer(norm='l2', min_df=0, use_idf=True, smooth_idf=False,
+                                sublinear_tf=True, tokenizer=lambda doc: doc.split(' '))
+        rel_articles_inc_original = [article.morphemed_content]
+        for elem in related_diff:
+            rel_articles_inc_original.append(elem.morphemed_content)
+        X = tfidf.fit_transform(rel_articles_inc_original)
+        top_sim_args = argsort(cosine_similarity(X)[0])[::-1][1:11]
+        new_articles = []
+        for idx in top_sim_args:
+            new_articles.append(related_diff[int(idx) - 1])
+        related_diff = new_articles
 
     article_list = []
     for related in related_diff:
