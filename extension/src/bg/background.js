@@ -7,6 +7,28 @@ function api_url(url_for_add) {
     return API_URL + url_for_add;
 }
 
+var MEDIA_PREFIX = [
+    "http://news.chosun.com",
+    "http://news.joins.com",
+    "http://news.donga.com",
+    "http://news.mk.co.kr",
+    "http://www.hani.co.kr",
+    "http://news.khan.co.kr",
+    "http://www.ohmynews.com",
+    "http://daily.hankooki.com",
+    "http://news.kmib.co.kr",
+];
+
+function have_media_prefix(url) {
+    for (var i = 0; i < MEDIA_PREFIX.length; i++) {
+        var prefix = MEDIA_PREFIX[i];
+        if (url.startsWith(prefix)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 chrome.extension.onConnect.addListener(function(port) {
     if (port.name == 'auth-event') {
         port.onMessage.addListener(function(msg) {
@@ -122,6 +144,10 @@ chrome.runtime.onMessage.addListener(
             });
         } else if (request.type == 'check-url') {
             var article_url = request.article_url;
+            if (!have_media_prefix(article_url)) {
+                sendResponse({result: false})
+                return false;
+            }
             console.log(article_url);
             $.ajax({
                 url: api_url('/api/check/'),
