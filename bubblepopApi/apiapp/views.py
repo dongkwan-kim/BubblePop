@@ -117,7 +117,7 @@ def find_articles(request):
         top_sim_args = argsort(cosine_similarity(X)[0])[::-1][1:11]
         new_articles = []
         for idx in top_sim_args:
-            new_articles.append(related_diff[idx - 1])
+            new_articles.append(related_diff[int(idx) - 1])
         related_diff = new_articles
 
     article_list = []
