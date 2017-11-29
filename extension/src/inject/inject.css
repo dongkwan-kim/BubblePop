@@ -1,3 +1,54 @@
-/**
- * Place your custom CSS styles here.
- **/
+.request-ssdv-btn {
+    z-index: 1000;
+    display: block;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #365899;
+    background-color: white;
+    margin: 5px 0px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .15) inset, 0 1px 4px rgba(0, 0, 0, .1);
+}
+
+.request-ssdv-btn:hover {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .15) inset, 0 1px 6px rgba(0, 0, 0, .15);
+}
+
+.article {
+    margin-right: 10px!important;
+    margin-bottom: 4px!important;
+}
+
+.embedded-article {
+    margin: 0 auto 10px auto;
+    max-width: 474px!important;
+}
+
+.embedded-title {
+    text-align: center;
+    padding-top: 3px!important;
+}
+
+.circle {
+    border-radius: 50%;
+    width: 70%;
+}
+
+.media-title {
+    font-weight: 500;
+    font-size: 11px;
+}
+
+.my_6m3 {
+    margin: 8px 0px!important;
+}
+
+.my_3bt9 {
+    color: #505050;
+}
+
+.report-btn {
+    font-size: 11px;
+}

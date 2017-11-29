@@ -1,17 +1,55 @@
 <!doctype html>
-<style type="text/css">
-	#mainPopup {
-		padding: 10px;
-		height: 200px;
-		width: 400px;
-		font-family: Helvetica, Ubuntu, Arial, sans-serif;
-	}
-	h1 {
-		font-size: 2em;
-	}
-</style>
+<html>
+<head lang="ko">
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="browser_action.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery/jquery.min.js"></script>
+</head>
 
-<div id="mainPopup">
-<h1>Hello extensionizr!</h1>
-<p>To shut this popup down, edit the manifest file and remove the "default popup" key. To edit it, just edit ext/browser_action/browser_action.html. The CSS is there, too.</p>
-</div>
+<script src="browser_action.js"></script>
+
+<body>
+    <div class="main">
+
+        <h5 class="header center">구독 설정</h5>
+
+        <div class="auth-body">
+            <div class="input-field col s12">
+                <input id="user-id" type="text" class="validate">
+                <label for="user-id">ID</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="user-password" type="password" class="validate">
+                <label for="user-password">Password</label>
+            </div>
+            <div class="right-align">
+                <a id="signin-btn" class="btn waves-effect waves-light indigo">
+                    계정 만들기
+                </a>
+                <a id="login-btn" class="btn waves-effect waves-light indigo">
+                    로그인
+                </a>
+            </div>
+        </div>
+
+        <div class="list-body">
+            <div class="center-align">
+                <a id="sort-btn" class="btn-flat waves-effect">
+                    <span id="sort-label"></span>
+                    <i class="material-icons">swap_vert</i>
+                </a>
+            </div>
+            <ul id="media-collection" class="collection"></ul>
+            <div class="footer">
+                <a id="update-btn" class="btn btn-large waves-effect waves-light indigo">
+                    업데이트 하기
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="materialize.min.js"></script>
+</body>
+
+</html>
