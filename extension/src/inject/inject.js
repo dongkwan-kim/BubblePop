@@ -273,7 +273,7 @@ function embeddedArticle(url, title, description, media, icon) {
                 '<div class="lfloat _ohe">'+
                     '<span class="_3m6-">'+
                         '<div class="_3ekx _29_4"><div class="_6m3 _--6 my_6m3">'+
-                            '<div class="mbs _6m6 _2cnj _5s6c">'+
+                            '<div class="mbs _6m6 _2cnj _5s6c my_5s6c">'+
                                 `<a href="${url}" target="_blank">${title}</a>`+
                             '</div>'+
                             `<div class="_3bt9 my_3bt9">${description}</div>`+
