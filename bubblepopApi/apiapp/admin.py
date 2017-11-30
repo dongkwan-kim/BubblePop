@@ -15,7 +15,7 @@ class ClusterAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'content', 'media', 'article_url')
+    list_display = ('title', 'media', 'article_url', 'published_at')
     list_filter = ('media',)
 
 
