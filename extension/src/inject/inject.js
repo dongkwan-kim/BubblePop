@@ -204,6 +204,7 @@ function getColorGradientList(numberOfItems, start, end) {
 }
 
 function modalHandler(ssdvModal, link) {
+    var start = (new Date()).getTime();
     var c = ssdvModal.child;
     var modalHeader = c.getElementsByClassName("modal-header")[0];
     modalHeader.innerHTML = '다른 시각의 뉴스';
@@ -257,6 +258,8 @@ function modalHandler(ssdvModal, link) {
 
         ssdvModal.show();
         updateAffinityGraph('.modal-graph', media_count, user_media_list);
+        var end = (new Date()).getTime();
+        console.log(end-start, start, end);
     });
 }
 
