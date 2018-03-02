@@ -1,4 +1,6 @@
 # BubblePop
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftodoaskit%2FBubblePop.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftodoaskit%2FBubblePop?ref=badge_shield)
+
 
 ## Motivation
 
@@ -81,3 +83,7 @@ We conducted user survey after the users used BubblePop application around 15 mi
 [4] [Bozdag, Engin, and Jeroen van den Hoven. "Breaking the filter bubble: democracy and design." Ethics and Information Technology 17.4 (2015): 249-265.](https://link.springer.com/article/10.1007/s10676-015-9380-y)
 
 [5] [El-Bermawy, Mostafa. "Your Filter Bubble is Destroying Democracy". Wired. Retrieved 6 March 2017.](https://www.wired.com/2016/11/filter-bubble-destroyingdemocracy/)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftodoaskit%2FBubblePop.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftodoaskit%2FBubblePop?ref=badge_large)
