@@ -52,7 +52,7 @@ BubblePop은 페이스북 뉴스피드에 뉴스 링크가 등장했을 경우, 
 
 ## Interface
 
-![](https://raw.githubusercontent.com/todoaskit/BubblePop/master/resources/example.png)
+![](https://raw.githubusercontent.com/dongkwan-kim/BubblePop/master/resources/example.png)
 
 ## User Evaluation
 
@@ -67,7 +67,7 @@ We conducted user survey after the users used BubblePop application around 15 mi
 - “The program tends to be incorrect when a queried article is released very recently (about 1~2 hours ago).” (P7)
 
 
-## [Release](https://github.com/todoaskit/BubblePop/releases)
+## [Release](https://github.com/dongkwan-kim/BubblePop/releases)
 
 
 ## Reference
