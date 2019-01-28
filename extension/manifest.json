@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "manifest_version": 2,
   "description": "An Interface to Reduce Media Bias in Facebook",
-  "homepage_url": "https://github.com/todoaskit/BubblePop",
+  "homepage_url": "https://github.com/dongkwan-kim/BubblePop",
   "icons": {
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
